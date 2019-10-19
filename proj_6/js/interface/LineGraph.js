@@ -12,10 +12,10 @@ d3.csv("https://raw.githubusercontent.com/srhardin/cs599/master/board_games_clea
   });
   
   csvData = data;
-  AfterLoad();
+  AfterLoadLine();
 });
 
-function AfterLoad()
+function AfterLoadLine()
 {
     // Monstrosity. Nasty. Bleh!!!
     var agedData = d3.nest()
@@ -49,7 +49,7 @@ function AfterLoad()
     .y(function(d) { return yScale(d.value); }) // set the y values for the line generator 
 
     // 1. Add the SVG to the page and employ #2
-    var svg = d3.select("body").append("svg")
+    var svg = d3.select("#chart").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
     .append("g")
