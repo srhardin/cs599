@@ -9,31 +9,32 @@
     
     <!-- Javascript -->
     <script type="text/javascript" src="js\d3\d3.min.js"></script>
-
-    <script src="js\interface\Histogram.js"></script>
 </head>
 
 <body>
     <h1><u>Graphs</u></h1>
-    <p>Line Chart (account value) Histogram (daily gain/loss)</p>
+    <p>TODO: Line Chart (account value)</p>
     
     <div id="chart"></div>
     <script src="js\interface\LineGraph.js"></script>
     
+    <p>TODO: Histogram (daily gain/loss)</p>
     <div id="chart2"></div>
     <script src="js\interface\Histogram.js"></script>
     
     <h1><u>Statistics</u></h1>
-    <p><b>Timeline: </b></p>
-    <p><b>Starting Money: </b></p>
-    <p><b>Ending Money: </b></p>
-  
+    <p id="timeline"><b>Timeline: </b></p>
+    <p id="startMoney"><b>Starting Money: </b></p>
+    <p id="endMoney"><b>Ending Money: </b></p>
+    
     <h1><u>Percentages</u></h1>
-    <p><b>Total Gain:</b></p>
-    <p><b>Yearly Gain:</b></p>
-    <p><b>Standard Deviation: </b></p>
-    <p><b>S&P500 Gain: </b></p>
-    <p><b>Max Drawdown:</b></p>
-    <p><b>Sharpe Ratio:</b></p>
+    <p id="totalGain"><b>Total Gain: </b></p>
+    <p id="yearlyGain"><b>Yearly Gain: </b></p>
+    <p id="deviation"><b>Standard Deviation: </b></p>
+    <p id="SnP500"><b>S&P500 Gain: </b></p>
+    <p id="maxDrawdown"><b>Max Drawdown: </b></p>
+    <p id="sharpe"><b>Sharpe Ratio: </b></p>
+    
+    <script src="js\interface\Statistics.js"></script>
 </body>
 </html>
