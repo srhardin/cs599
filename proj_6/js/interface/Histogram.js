@@ -55,14 +55,17 @@ function AfterLoad()
     x.domain(means.map(function(d) { return d.key; }));
     y.domain([0, d3.max(means, function(d) { return d.value; })]);
 
+    var color = d3.scaleOrdinal().range(["#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+    
     hist.selectAll(".bar")
         .data(means)
         .enter().append("rect")
-        .attr("class", "bar")
+         //.attr("class", "bar")
         .attr("x", function(d) { return x(d.key); })
         .attr("width", x.bandwidth())
         .attr("y", function(d) { return y(d.value); })
-        .attr("height", function(d) { return height - y(d.value); });
+        .attr("height", function(d) { return height - y(d.value); })
+        .style("fill", function(d, i) { return color(i%4); }); // IMPORTANT!!! <-- SAM
 
     // add the x Axis
     hist.append("g")

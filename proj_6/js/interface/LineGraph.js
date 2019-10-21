@@ -33,12 +33,10 @@ function AfterLoadLine()
     .sortKeys((a,b) => d3.ascending(+a, +b))
     .entries(csvData);
     
-    // 5. X scale will use the index of our data
     var xScale = d3.scaleLinear()
     .domain([0, 25]) // input
     .range([0, width]); // output
 
-    // 6. Y scale will use the randomly generate number 
     var yScale = d3.scaleLinear()
     .domain([0, 10]) // input 
     .range([height, 0]); // output 
@@ -48,7 +46,7 @@ function AfterLoadLine()
     .x(function(d) { return xScale(d.key); }) // set the x values for the line generator
     .y(function(d) { return yScale(d.value); }) // set the y values for the line generator 
 
-    // 1. Add the SVG to the page and employ #2
+    // 1. Add the SVG to the page and employ
     var svg = d3.select("#chart").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
