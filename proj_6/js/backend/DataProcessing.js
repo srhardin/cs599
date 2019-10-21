@@ -588,7 +588,6 @@ function getData()
 	});
 	//return the promise that will resolve into an object that contains the hash and the data
 	return completion;
-
 }
 
 

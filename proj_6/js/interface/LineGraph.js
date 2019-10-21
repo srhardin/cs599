@@ -1,6 +1,6 @@
 var margin = {top: 50, right: 50, bottom: 50, left: 50}
-width = 960;
-height = 500;
+width = 600;
+height = 400;
   
 var csvData;
 d3.csv("https://raw.githubusercontent.com/srhardin/cs599/master/board_games_clean01.csv").then(function(data) 
