@@ -560,6 +560,8 @@ CompanyHash["ZEN"] = 0;
 CompanyHash["ZTS"] = 0;
 }
 //This returns a promise!
+
+let DateHash = {};
 function getData()
 {
 
@@ -568,6 +570,15 @@ function getData()
 	let PromiseList = [];
 	let CompanyData = new Array();
 	let count = 0;
+	let AComp = d3.csv("https://raw.githubusercontent.com/srhardin/cs599/master/proj_6/data/" + "A" + ".csv").then(function(data) {
+		for(var i = 0; i < data.length; ++i)
+		{
+			DateHash[data[i]["Date"]] = i;
+		}
+		console.log("done");
+		console.log(DateHash);
+	});
+	
 	//This allows us to go through all of the keys in a given object. ezpz
 	for (var key in CompanyHash) {
 		if (CompanyHash.hasOwnProperty(key)) {
@@ -575,14 +586,52 @@ function getData()
 			PromiseList.push(d3.csv("https://raw.githubusercontent.com/srhardin/cs599/master/proj_6/data/" + key + ".csv"));
 		}
 	}
+	count = 0;
 	//This will resolve the promises in order once they are all finished
 	//This means they will be put in alphabetical order, since that is the order we called them in initially
 	let completion = new Promise(function (resolve,reject) {
 		Promise.all(PromiseList).then(function(data) {
+			
+			for(var key in DateHash) 
+			{
+				for(let i = 0; i < data.length; ++i)
+				{
+					if(data[i].length <= DateHash[key])
+					{
+						let temp = {};
+						temp["Date"] = key;
+						temp["Open"] = 0;
+						temp["High"] = 0;
+						temp["Low"] = 0;
+						temp["Close"] = 0;
+						temp["Adjusted_close"] = 0;
+						temp["Volume"] = 0;
+						data[i].push(temp);
+					}
+					else if(data[i][DateHash[key]].Date != key)
+					{
+						console.log(++count);
+						let temp = {};
+						temp["Date"] = key;
+						temp["Open"] = 0;
+						temp["High"] = 0;
+						temp["Low"] = 0;
+						temp["Close"] = 0;
+						temp["Adjusted_close"] = 0;
+						temp["Volume"] = 0;
+						data[i].splice(DateHash[key],0, temp);
+						console.log(temp);
+					}
+				
+				}
+			}
+
+			console.log(data);
 			CompanyData.push(data);
 		}).then(function() {
 			CompanyReturn["Hash"] = CompanyHash;
 			CompanyReturn["Data"] = CompanyData[0];
+			CompanyReturn["Date"] = DateHash;
 			resolve(CompanyReturn);
 		});
 	});
