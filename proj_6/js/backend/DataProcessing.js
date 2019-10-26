@@ -236,7 +236,7 @@ CompanyHash["GLW"] = 0;
 CompanyHash["GM"] = 0;
 CompanyHash["GNRC"] = 0;
 CompanyHash["GOOG"] = 0;
-CompanyHash["GOOG"] = 0;
+CompanyHash["GOOGL"] = 0;
 CompanyHash["GPC"] = 0;
 CompanyHash["GPN"] = 0;
 CompanyHash["GPS"] = 0;
@@ -586,6 +586,8 @@ function getData()
 			PromiseList.push(d3.csv("https://raw.githubusercontent.com/srhardin/cs599/master/proj_6/data/" + key + ".csv"));
 		}
 	}
+	//console.log(count);
+	//console.log(CompanyHash);
 	count = 0;
 	//This will resolve the promises in order once they are all finished
 	//This means they will be put in alphabetical order, since that is the order we called them in initially
@@ -626,7 +628,7 @@ function getData()
 				}
 			}
 
-			//console.log(data);
+			console.log(data);
 			CompanyData.push(data);
 		}).then(function() {
 			CompanyReturn["Hash"] = CompanyHash;
