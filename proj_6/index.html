@@ -8,23 +8,23 @@
     <link rel="stylesheet" href="css\interface.css">
     
     <!-- Javascript -->
-    <script type="text/javascript" src="js\d3\d3.min.js"></script>
-    <script type="text/javascript" src="js\backend\DataProcessing.js"></script>
-    <script type="text/javascript" src="js\interface\GlobalVars.js"></script>
-    <script type="text/javascript" src="js\simulation\simulation.js"></script>
+    <script src="js\d3\d3.min.js"></script>
+    <script src="js\backend\DataProcessing.js"></script>
+    <script src="js\interface\GlobalVars.js"></script>
+    <script src="js\simulation\simulation.js"></script>
 </head>
 
 <body>
     <h1><u>Graphs</u></h1>
-    <!--Start Date: <input type="date" id="startDate" min="2009-01-01" value="2009-01-01" max="2019-01-01">
-    End Date: <input type="date" id="endDate" min="2009-01-01" value="2019-01-01" max="2019-01-01">
-    <button onclick="StartSimulation()">Run Simulation</button>-->
-    <p>TODO: Line Chart (account value)</p>
-    <div id="chart"></div>
+    Start Date: <input type="date" id="startDate" min="2009-01-01" value="2009-01-01" max="2019-10-11">
+    End Date: <input type="date" id="endDate" min="2009-01-01" value="2019-10-11" max="2019-10-11">
+    <button onclick="StartSimulation()">Run Simulation</button>
+    <p>Line Chart (account value)</p>
+    <div id="accountValue"></div>
     <script src="js\interface\LineGraph.js"></script>
     
-    <p>TODO: Histogram (daily gain/loss)</p>
-    <div id="chart2"></div>
+    <p>Histogram (daily gain/loss)</p>
+    <div id="histogram"></div>
     <script src="js\interface\Histogram.js"></script>
     
     <h1><u>Statistics</u></h1>
@@ -41,6 +41,6 @@
     <p id="sharpe"><b>Sharpe Ratio: </b></p>
     
     <script src="js\interface\Statistics.js"></script>
-    <script type="text/javascript" src="js\interface\Buttons.js"></script>
+    <script src="js\interface\Buttons.js"></script>
 </body>
 </html>

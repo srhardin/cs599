@@ -6,7 +6,7 @@ var margin = {top: 20, right: 20, bottom: 50, left: 80},
 // append the hist object to the body of the page
 // append a 'group' element to 'hist'
 // moves the 'group' element to the top left margin
-var hist = d3.select("#chart2").append("svg")
+var hist = d3.select("#histogram").append("svg")
     .attr("width", width + margin.left)
     .attr("height", height + margin.top + margin.bottom)
     .append("g")
@@ -83,46 +83,8 @@ function BuildGainsHistogram()
       .style("text-anchor", "middle")
       .text("Number in the Bucket"); 
 }
-    
-//var g_data;
-//d3.csv("https://raw.githubusercontent.com/srhardin/cs599/master/board_games_clean01.csv")
-//	.then(function(data)
-//        {
-//            data.forEach(function(d) 
-//            {
-//                d.average_rating = +d.average_rating;
-//                d.users_rated = +d.users_rated;
-//            });
-//            
-//            g_data = data;
-//            AfterLoad();
-//        });
-//        
-//var nBin = 21;
-//function AfterLoad()
-//{
-//	//binning
-//    var nested_data = d3.nest().key(function(d) { return Math.round(d.average_rating * 2) / 2;})
-//    var means = nested_data
-//        .rollup(function(data_points) 
-//            {
-//                return d3.mean(data_points,
-//                function(d) 
-//                {
-//                    return d.users_rated;
-//                })
-//            })
-//        .sortKeys(d3.ascending)
-//        .entries(g_data);
-//        
-//    //end binning
-//
-//    x.domain(means.map(function(d) { return d.key; }));
-//    y.domain([0, d3.max(means, function(d) { return d.value; })]);
-//
-//    // TODO: Colors
-//    //var color = d3.scaleOrdinal().range(["#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
-//    
-    
-//
-//};
+
+function ResetHistogram()
+{
+    hist.remove();
+}

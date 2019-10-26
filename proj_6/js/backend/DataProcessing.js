@@ -575,8 +575,8 @@ function getData()
 		{
 			DateHash[data[i]["Date"]] = i;
 		}
-		console.log("done");
-		console.log(DateHash);
+		//console.log("done");
+		//console.log(DateHash);
 	});
 	
 	//This allows us to go through all of the keys in a given object. ezpz
@@ -610,7 +610,7 @@ function getData()
 					}
 					else if(data[i][DateHash[key]].Date != key)
 					{
-						console.log(++count);
+						//console.log(++count);
 						let temp = {};
 						temp["Date"] = key;
 						temp["Open"] = 0;
@@ -620,13 +620,13 @@ function getData()
 						temp["Adjusted_close"] = 0;
 						temp["Volume"] = 0;
 						data[i].splice(DateHash[key],0, temp);
-						console.log(temp);
+						//console.log(temp);
 					}
 				
 				}
 			}
 
-			console.log(data);
+			//console.log(data);
 			CompanyData.push(data);
 		}).then(function() {
 			CompanyReturn["Hash"] = CompanyHash;
