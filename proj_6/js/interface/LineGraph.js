@@ -98,6 +98,6 @@ class AccountValueGraph
 
     yFunc(d)
     {
-        return this.yScale(d) - this.margin.bottom;
+        return this.yScale(d);
     }
 };

@@ -15,10 +15,19 @@
 </head>
 
 <body>
-    <h1><u>Graphs</u></h1>
+    <h1><u>Options</u></h1>
     Start Date: <input type="date" id="startDate" min="2009-01-01" value="2018-10-11" max="2019-10-11">
     End Date: <input type="date" id="endDate" min="2009-01-01" value="2019-10-11" max="2019-10-11">
-    <button onclick="StartSimulation()">Run Simulation</button>
+    Algorithm: 
+        <select id="algorithm">
+            <option>one</option>
+            <option>two</option>
+            <option>three</option>
+            <option>four</option>
+        </select> 
+    <p><button onclick="StartSimulation()">Run Simulation</button></p>
+    
+    <h1><u>Graphs</u></h1>
     <p>Line Chart (account value)</p>
     <div id="accountValue"></div>
     <script src="js\interface\LineGraph.js"></script>
