@@ -6,3 +6,5 @@ var g_EndMoney = 150000;
 
 var g_YearlyGain = 0;
 var g_StdDev = 1;
+
+var g_Algorithm = "Random";

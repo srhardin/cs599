@@ -1,9 +1,3 @@
-var margin = {top: 50, right: 50, bottom: 50, left: 50}
-width = 600;
-height = 400;
-
-var idx = 0;
-
 class AccountValueGraph
 {
     constructor()
@@ -14,16 +8,6 @@ class AccountValueGraph
         this.idx = 0;
         
         this.initialize();
-    }
-    
-    xFunc()
-    {
-        return this.xScale(this.idx++) + this.margin.left;
-    }
-
-    yFunc(d)
-    {
-        return this.yScale(d) - this.margin.bottom;
     }
     
     initialize()
@@ -105,5 +89,15 @@ class AccountValueGraph
         svg.select(".y.axis") // change the y axis
             .duration(750)
             .call(this.yAxis);
+    }
+    
+    xFunc()
+    {
+        return this.xScale(this.idx++) + this.margin.left;
+    }
+
+    yFunc(d)
+    {
+        return this.yScale(d) - this.margin.bottom;
     }
 };

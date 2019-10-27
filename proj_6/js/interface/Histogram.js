@@ -1,90 +1,118 @@
-// set the dimensions and margins of the graph
-var margin = {top: 20, right: 20, bottom: 50, left: 80},
-    width = 600  - margin.right,
-    height = 400 - margin.top - margin.bottom;
-
-// append the hist object to the body of the page
-// append a 'group' element to 'hist'
-// moves the 'group' element to the top left margin
-var hist = d3.select("#histogram").append("svg")
-    .attr("width", width + margin.left)
-    .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-function BuildGainsHistogram()
+class GainsLossesHistogram
 {
-    // Build the ranges
-    var max = d3.max(gains_losses);
-    var min = d3.min(gains_losses);
-    
-    // Bin the data
-    var histGenerator = d3.histogram()
-    .domain([min,max])
-    .thresholds(20);
-    
-    var bins = histGenerator(gains_losses);
-
-    // set the ranges
-    var x = d3.scaleLinear()
-        .domain([min, max])
-        .range([0, width]);
-    
-    var yMax = d3.max(bins, function(d){return d.length});
-    var yMin = d3.min(bins, function(d){return d.length});
+    constructor()
+    {
+        this.margin = {top: 50, right: 25, bottom: 50, left: 50};
+        this.width = 600;
+        this.height = 400;
         
-    var y = d3.scaleLinear()
-        .domain([0, yMax])
-        .range([height, 0]);
-    
-    var color = d3.scaleOrdinal().range(["#AA0000", "#00AA00"]);
-    
-    var bar = hist.selectAll(".bar")
-        .data(bins)
-        .enter().append("rect")
-         //.attr("class", "bar")
-        .attr("x", function(d) { return x(d.x0); })
-        .attr("width", 12)
-        .attr("y", function(d) { return y(d.length); })
-        .attr("height", function(d) { return height - y(d.length); })
-        .style("fill", function(d, i) 
-        { 
-            if(d.x0 < 0.0) {
-                return color(0);
-            }
-            else {
-                return color(1)
-            }
-        }); // IMPORTANT!!! <-- SAM
-
-    // add the x Axis
-    hist.append("g")
-        .attr("transform", "translate(0," + height + ")")
-        .call(d3.axisBottom(x));
-
-    // text label for the x axis
-    hist.append("text")             
-      .attr("transform",
-            "translate(" + (width/2) + " ," + 
-                           (height + margin.bottom - 10) + ")")
-      .style("text-anchor", "middle")
-      .text("Gain and Loss Percents");
-
-    // add the y Axis
-    hist.append("g")
-        .call(d3.axisLeft(y));
+        this.color = {red: "#AA0000", green: "#00AA00"};
         
-    // text label for the y axis
-    hist.append("text")
-      .attr("transform", "rotate(-90)")
-      .attr("y", 0 - margin.left)
-      .attr("x", 0 - (height / 2))
-      .attr("dy", "1em")
-      .style("text-anchor", "middle")
-      .text("Number in the Bucket"); 
-}
+        this.initialize();
+    }
+    
+    initialize()
+    {
+        this.xScale = d3.scaleLinear()
+            .domain([-5, 5])
+            .range([0, this.width-this.margin.right]);
+            
+        this.yScale = d3.scaleLinear()
+            .domain([0, 75])
+            .range([this.height, 0]);
+        
+        // Define the axes
+        this.xAxis = d3.axisBottom(this.xScale);
+        this.yAxis = d3.axisLeft(this.yScale);
+        
+        this.svg = d3.select("#gainsLosses").append("svg")
+            .attr("width", this.width + this.margin.left)
+            .attr("height", this.height + this.margin.top + this.margin.bottom)
+            .append("g")
+            .attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
+            
+        // add the x Axis
+        this.svg.append("g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(0," + this.height + ")")
+            .call(this.xAxis);
+    
+        // text label for the x axis
+        this.svg.append("text")             
+            .attr("transform", "translate(" + (this.width/2) + " ," + (this.height + this.margin.bottom - 10) + ")")
+            .style("text-anchor", "middle")
+            .text("Gain and Loss Percents");
+    
+        // add the y Axis
+        this.svg.append("g")
+            .attr("class", "y axis")
+            .call(this.yAxis);
+            
+        // text label for the y axis
+        this.svg.append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("y", 0 - this.margin.left)
+            .attr("x", 0 - (this.height / 2))
+            .attr("dy", "1em")
+            .style("text-anchor", "middle")
+            .text("Number in the Bucket"); 
+    }
+    
+    update(data)
+    {
+        // Find extents
+        var max = d3.max(data);
+        var min = d3.min(data);
+        
+        // Bin the data
+        var histGenerator = d3.histogram()
+            .domain([min,max])
+            .thresholds(20);
+            
+        var bins = histGenerator(data);
+        
+        var yMax = d3.max(bins, function(d){return d.length});
+        this.xScale.domain([min, max]);
+        this.yScale.domain([0, yMax]);
+        
+        this.svg.selectAll("svg > g > rect").remove();
+        
+        this.svg.selectAll("bar")
+            .data(bins)
+            .enter().append("rect")
+            .attr("x", d => { return this.xFunc(d.x0); })
+            .attr("width", 20)
+            .attr("y", d => { return this.yFunc(d.length); })
+            .attr("height", d => { return this.height - this.yFunc(d.length); })
+            .style("fill", d => 
+            { 
+                if(d.x0 < 0.0) {
+                    return this.color.red;
+                }
+                else {
+                    return this.color.green
+                }
+            });
+        
+        // Select the section we want to apply our changes to
+        var changes = d3.select("#gainsLosses").transition();
+    
+        // Make the changes
+        changes.select(".x.axis") // change the x axis
+            .duration(750)
+            .call(this.xAxis);
+        changes.select(".y.axis") // change the y axis
+            .duration(750)
+            .call(this.yAxis);
+    }
+    
+    xFunc(d)
+    {
+        return this.xScale(d);
+    }
 
-function ResetHistogram()
-{
-    hist.remove();
-}
+    yFunc(d)
+    {
+        return this.yScale(d);
+    }
+};
