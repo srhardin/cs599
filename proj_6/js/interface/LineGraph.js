@@ -16,147 +16,94 @@ class AccountValueGraph
         this.initialize();
     }
     
+    xFunc()
+    {
+        return this.xScale(this.idx++) + this.margin.left;
+    }
+
+    yFunc(d)
+    {
+        return this.yScale(d) - this.margin.bottom;
+    }
+    
     initialize()
     {
-        // Create the 
-        var xScale = d3.scaleLinear()
-            .domain([0, 252])
-            .range([0, width]);
+        // Set the ranges
+        this.xScale = d3.scaleLinear().domain([0, 100]).range([0, this.width-this.margin.left]);
+        this.yScale = d3.scaleLinear().domain([0, 100000]).range([this.height, 0]);
         
-        var yScale = d3.scaleLinear()
-            .domain([0, 100000])
-            .range([height, 0]);
+        // Define the axes
+        this.xAxis = d3.axisBottom(this.xScale);
+        this.yAxis = d3.axisLeft(this.yScale);
+    
+        // Define the line
+        this.valueline = d3.line()
+            .x(d => { return this.xFunc(); })
+            .y(d => { return this.yFunc(d); });
         
-        // Set up the line generator
-        this.line = d3.line()
-            .x(function(d) { return xScale(idx++); })
-            .y(function(d) { return yScale(d); })
-        
+        // Adds the svg canvas
         this.svg = d3.select("#accountValue")
             .append("svg")
-            .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom)
+            .attr("width", this.width + this.margin.left + this.margin.right)
+            .attr("height", this.height + this.margin.top + this.margin.bottom)
             .append("g")
-            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-            
-            // 3. Call the x axis in a group tag
+            .attr("transform", "translate(" + (this.margin.left) + "," + (this.margin.top) + ")");
+    
+        // Add the valueline path.
+        this.svg.append("path")
+            .attr("class", "line")
+            .attr("d", this.valueline({}));
+    
+        // Add the X Axis
         this.svg.append("g")
-            .attr("class", "x-axis")
-            .attr("transform", "translate(0," + height + ")")
-            .call(d3.axisBottom(xScale)); // Create an axis component with d3.axisBottom
-        
+            .attr("class", "x axis")
+            .attr("transform", "translate("+(this.margin.left)+"," + (this.height) + ")")
+            .call(this.xAxis);
+            
         // text label for the y axis
         this.svg.append("text")
-            .attr("y", (height + margin.bottom - 25))
-            .attr("x", (width/2))
+            .attr("y", (this.height + this.margin.bottom/2))
+            .attr("x", (this.width/2))
             .attr("dy", "1em")
             .style("text-anchor", "middle")
-            .text("Date");
-        
-        // 4. Call the y axis in a group tag
+            .text("Trading Day");
+    
+        // Add the Y Axis
         this.svg.append("g")
-            .attr("class", "y-axis")
-            .call(d3.axisLeft(yScale)); // Create an axis component with d3.axisLeft
-        
+            .attr("class", "y axis")
+            .attr("transform", "translate(" + (this.margin.left) + ","+(0)+")")
+            .call(this.yAxis);
+            
         // text label for the y axis
         this.svg.append("text")
             .attr("transform", "rotate(-90)")
-            .attr("y", 0 - margin.left)
-            .attr("x", 0 - (height / 2))
+            .attr("y", - this.margin.left/2)
+            .attr("x", - (this.height / 2))
             .attr("dy", "1em")
             .style("text-anchor", "middle")
             .text("Account Value");
     }
-    
-    update(newData)
+
+    update(data)
     {
-        idx = 0;
+        this.idx = 0;
         
-        // Update the scale values
-        var xScale = d3.scaleLinear()
-            .domain(DateHash[g_StartDate], DateHash[g_EndDate])
-            .range([0, width]);
-        
-        var yScale = d3.scaleLinear()
-            .domain([d3.min(newData) - 10000, d3.max(newData) + 10000])
-            .range([height, 0]);
-            
-        this.svg.select("g")
-            .attr("class", "x-axis")
-            .call(d3.axisBottom(xScale));
-            
-        this.svg.select("g")
-            .attr("class", "y-axis")
-            .call(d3.axisLeft(yScale));
-            
-        // Call the line generator 
-        this.svg.append("path")
-            .datum(newData)
-            .attr("class", "line")
-            .attr("d", this.line);
+        // Scale the range of the data again 
+        this.xScale.domain([0, data.length]);
+        this.yScale.domain([d3.min(data) - 5000, d3.max(data) + 5000]);
+    
+        // Select the section we want to apply our changes to
+        var svg = d3.select("#accountValue").transition();
+    
+        // Make the changes
+        svg.select(".line")   // change the line
+            .duration(750)
+            .attr("d", this.valueline(data));
+        svg.select(".x.axis") // change the x axis
+            .duration(750)
+            .call(this.xAxis);
+        svg.select(".y.axis") // change the y axis
+            .duration(750)
+            .call(this.yAxis);
     }
 };
-
-function BuildLineGraph()
-{
-    var xScale = d3.scaleLinear()
-    .domain([0, 252]) // input
-    .range([0, width]); // output
-
-    var yScale = d3.scaleLinear()
-    .domain([d3.min(value_over_time) - 10000, d3.max(value_over_time) + 10000]) // input 
-    .range([height, 0]); // output 
-
-    // 7. d3's line generator
-    this.line = d3.line()
-    .x(function(d) { return xScale(idx++); }) // set the x values for the line generator
-    .y(function(d) { return yScale(d); }) // set the y values for the line generator 
-
-    // 1. Add the SVG to the page and employ
-    //if(ds.select("#chart").select("svg")
-    var svg = d3.select("#accountValue")
-    .append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-    // 3. Call the x axis in a group tag
-    svg.append("g")
-    .attr("class", "x-axis")
-    .attr("transform", "translate(0," + height + ")")
-    .call(d3.axisBottom(xScale)); // Create an axis component with d3.axisBottom
-    
-    // text label for the y axis
-    svg.append("text")
-      .attr("y", (height + margin.bottom - 25))
-      .attr("x", (width/2))
-      .attr("dy", "1em")
-      .style("text-anchor", "middle")
-      .text("Date");
-
-    // 4. Call the y axis in a group tag
-    svg.append("g")
-    .attr("class", "y-axis")
-    .call(d3.axisLeft(yScale)); // Create an axis component with d3.axisLeft
-    
-    // text label for the y axis
-    svg.append("text")
-      .attr("transform", "rotate(-90)")
-      .attr("y", 0 - margin.left)
-      .attr("x", 0 - (height / 2))
-      .attr("dy", "1em")
-      .style("text-anchor", "middle")
-      .text("Account Value");
-
-    // 9. Append the path, bind the data, and call the line generator 
-    svg.append("path")
-    .datum(value_over_time)
-    .attr("class", "line")
-    .attr("d", line);
-}
-
-function ResetLineGraph()
-{
-    d3.select("#chart").exit().remove();
-}
