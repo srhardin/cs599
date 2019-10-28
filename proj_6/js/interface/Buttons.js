@@ -8,10 +8,11 @@ function StartSimulation()
     
     if(opt == "one")
     {
-        run_simulation();
+        algorithm1();
     }
     else if (opt == "two")
     {
+        algorithm2();
     }
     else if (opt == "three")
     {
