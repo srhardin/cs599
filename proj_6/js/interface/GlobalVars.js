@@ -10,3 +10,5 @@ var g_StdDev = 1;
 var g_Algorithm = "Random";
 
 var g_OwnedPerDay = [];
+
+var g_SelectedStock = "A";
