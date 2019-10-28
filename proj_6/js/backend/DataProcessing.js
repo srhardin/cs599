@@ -7,6 +7,16 @@
 */
 let CompanyHash = {};
 
+function combo(thelist)
+{
+	var idx = thelist.selectedIndex;
+	var content = thelist.options[idx].innerHTML;
+	console.log(content);
+	g_SelectedStock = content;
+	UpdateStockGraphs(content);
+}
+
+
 function BuildHash(){
 CompanyHash["A"] = 0;
 CompanyHash["AAP"] = 0;
@@ -639,6 +649,33 @@ function getData()
 	});
 	//return the promise that will resolve into an object that contains the hash and the data
 	return completion;
+}
+
+function getStockData(stockName, startDate, endDate)
+{
+	let returnData = [];
+	returnData = data[hash[stockName]].slice(DateHash[startDate], DateHash[endDate]);
+	let finalData = [];
+	for(let i = 0; i < returnData.length; ++i)
+	{
+		let push = 0;
+		push = parseFloat(returnData[i].Close);
+		finalData.push(push);
+		
+	}
+	console.log(finalData);
+	return finalData;
+	
+}
+
+function getOwnedData(stockName)
+{
+	let dataReturn = [];
+	for(let i = 0; i < g_OwnedPerDay.length; ++i)
+	{
+		dataReturn.push(g_OwnedPerDay[i][hash[stockName]]);
+	}
+	return dataReturn;
 }
 
 
