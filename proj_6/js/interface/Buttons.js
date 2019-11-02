@@ -17,9 +17,11 @@ function StartSimulation()
     }
     else if (opt == "three")
     {
+        algorithm3();
     }
     else if (opt == "four")
     {
+        algorithm4();
     }
     
     // Update the visuals
