@@ -3,8 +3,8 @@ class AccountValueGraph
     constructor()
     {
         this.margin = {top: 50, right: 50, bottom: 50, left: 50};
-        this.width = 600;
-        this.height = 400;
+        this.width = 500;
+        this.height = 300;
         this.idx = 0;
         
         this.initialize();
@@ -41,7 +41,7 @@ class AccountValueGraph
         // Add the X Axis
         this.svg.append("g")
             .attr("class", "x axis")
-            .attr("transform", "translate("+(this.margin.left)+"," + (this.height) + ")")
+            .attr("transform", "translate("+(this.margin.left/2)+"," + (this.height) + ")")
             .call(this.xAxis);
             
         // text label for the y axis
@@ -55,13 +55,13 @@ class AccountValueGraph
         // Add the Y Axis
         this.svg.append("g")
             .attr("class", "y axis")
-            .attr("transform", "translate(" + (this.margin.left) + ","+(0)+")")
+            .attr("transform", "translate(" + (this.margin.left/2) + ","+(0)+")")
             .call(this.yAxis);
             
         // text label for the y axis
         this.svg.append("text")
             .attr("transform", "rotate(-90)")
-            .attr("y", - this.margin.left/2)
+            .attr("y", - this.margin.left)
             .attr("x", - (this.height / 2))
             .attr("dy", "1em")
             .style("text-anchor", "middle")
@@ -93,7 +93,7 @@ class AccountValueGraph
     
     xFunc()
     {
-        return this.xScale(this.idx++) + this.margin.left;
+        return this.xScale(this.idx++) + this.margin.left/2;
     }
 
     yFunc(d)

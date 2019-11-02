@@ -3,8 +3,8 @@ class GainsLossesHistogram
     constructor()
     {
         this.margin = {top: 50, right: 25, bottom: 50, left: 50};
-        this.width = 600;
-        this.height = 400;
+        this.width = 500;
+        this.height = 300;
         
         this.color = {red: "#AA0000", green: "#00AA00"};
         
@@ -22,7 +22,7 @@ class GainsLossesHistogram
             .range([this.height, 0]);
         
         // Define the axes
-        this.xAxis = d3.axisBottom(this.xScale);
+        this.xAxis = d3.axisBottom(this.xScale).ticks(10);
         this.yAxis = d3.axisLeft(this.yScale);
         
         this.svg = d3.select("#gainsLosses").append("svg")
@@ -93,7 +93,7 @@ class GainsLossesHistogram
                     return this.color.green
                 }
             });
-        
+            
         // Select the section we want to apply our changes to
         var changes = d3.select("#gainsLosses").transition();
     

@@ -11,7 +11,7 @@ function combo(thelist)
 {
 	var idx = thelist.selectedIndex;
 	var content = thelist.options[idx].innerHTML;
-	console.log(content);
+	//console.log(content);
 	g_SelectedStock = content;
 	UpdateStockGraphs(content);
 }
@@ -659,7 +659,7 @@ function getStockData(stockName, startDate, endDate)
 	for(let i = 0; i < returnData.length; ++i)
 	{
 		let push = 0;
-		push = parseFloat(returnData[i].Close);
+		push = parseFloat(returnData[i].Adjusted_close);
 		finalData.push(push);
 		
 	}

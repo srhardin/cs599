@@ -7,6 +7,19 @@
   color: white;
 }
 
+.background {
+    background: darkgrey;
+    width: 1850px;
+    height: 950px;
+}
+/*
+.start-btn {
+    background-color: steelblue;
+    padding: 3px;
+    font: 20px san-serif;
+}
+*/
+
 .line {
     fill: none;
     stroke: #ffab00;

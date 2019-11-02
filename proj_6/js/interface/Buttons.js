@@ -1,5 +1,6 @@
 function StartSimulation()
 {
+    // TODO: ensure 
     g_StartDate = document.getElementById('startDate').value;
     g_EndDate = document.getElementById('endDate').value;
     

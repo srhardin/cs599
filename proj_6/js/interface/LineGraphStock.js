@@ -3,8 +3,8 @@ class StockValueGraph
     constructor()
     {
         this.margin = {top: 50, right: 50, bottom: 50, left: 50};
-        this.width = 600;
-        this.height = 400;
+        this.width = 500;
+        this.height = 300;
         this.idx = 0;
         
         this.initialize();
@@ -108,8 +108,8 @@ class StockOwnedGraph
     constructor()
     {
         this.margin = {top: 50, right: 50, bottom: 50, left: 50};
-        this.width = 600;
-        this.height = 400;
+        this.width = 500;
+        this.height = 300;
         this.idx = 0;
         
         this.initialize();
