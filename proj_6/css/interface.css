@@ -7,6 +7,18 @@
   color: white;
 }
 
+.title {
+    padding: 1px 0px;
+    text-align: center;
+    margin: auto;
+    
+    border-radius: 5px;
+    
+    background: #5599EE;
+    width: 250px;
+    top: 10px;
+}
+
 .background {
     background: darkgrey;
     width: 1850px;
