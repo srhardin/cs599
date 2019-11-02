@@ -1,8 +1,9 @@
 function StartSimulation()
 {
-    // TODO: ensure 
+    // TODO: ensure valid dates
     g_StartDate = document.getElementById('startDate').value;
     g_EndDate = document.getElementById('endDate').value;
+    g_StartMoney = document.getElementById('startMoney').value;
     
     var alg = document.getElementById('algorithm');
     var opt = alg.options[alg.selectedIndex].innerHTML;

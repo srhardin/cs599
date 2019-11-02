@@ -24,7 +24,11 @@
     <div class="background">
         <h1><u>Options</u></h1>
         Start Date: <input type="date" id="startDate" min="2009-01-01" value="2018-10-11" max="2019-10-11">
-        <br>End Date: <input type="date" id="endDate" min="2009-01-01" value="2019-10-11" max="2019-10-11">
+        <br>
+        End Date: <input type="date" id="endDate" min="2009-01-01" value="2019-10-11" max="2019-10-11">
+        <br>
+        Start Money: <input type="number" id="startMoney" min="1000" value="100000">
+        <br>
         Algorithm: 
             <select id="algorithm">
                 <option>one</option>
@@ -592,22 +596,19 @@
             <div id="accountValue" class="graph" style="position: absolute; top: 10px; left: 10px"></div>
             <script src="js\interface\LineGraph.js"></script>
             
-            <div id="stockValue" class="graph" style="position: absolute; top: 10px; left: 630px"></div>
-            <script src="js\interface\LineGraphStock.js"></script>
+            <div id="gainsLosses" class="graph" style="position: absolute; top: 10px; left: 630px"></div>
+            <script src="js\interface\Histogram.js"></script>
         </div>
         <div class="graphContainer" style="position: absolute; top: 575px; left: 615px">
             <div id="stockOwned" class="graph" style="position: absolute; top: 10px; left: 10px"></div>
             
-            <div id="gainsLosses" class="graph" style="position: absolute; top: 10px; left: 630px"></div>
-            <script src="js\interface\Histogram.js"></script>
+            <div id="stockValue" class="graph" style="position: absolute; top: 10px; left: 630px"></div>
+            <script src="js\interface\LineGraphStock.js"></script>
         </div>
         
         <h1><u>Statistics</u></h1>
         <p id="timeline"><b>Timeline: </b></p>
-        <p id="startMoney"><b>Starting Money: </b></p>
         <p id="endMoney"><b>Ending Money: </b></p>
-        
-        <h1><u>Percentages</u></h1>
         <p id="totalGain"><b>Total Gain: </b></p>
         <p id="yearlyGain"><b>Yearly Gain: </b></p>
         <p id="deviation"><b>Standard Deviation: </b></p>
