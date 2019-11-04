@@ -193,10 +193,4 @@ function algorithm1()
     }
     g_OwnedPerDay.push(owned_array);
   }
-
-  //TODO - check all these are needed and correct
-  //g_EndMoney = balance;
-  //BuildGainsHistogram();
-  //avGraph.update(value_over_time);
-  //SetAllStats();
 }

@@ -11,7 +11,6 @@ function combo(thelist)
 {
 	var idx = thelist.selectedIndex;
 	var content = thelist.options[idx].innerHTML;
-	//console.log(content);
 	g_SelectedStock = content;
 	UpdateStockGraphs(content);
 }
@@ -638,7 +637,7 @@ function getData()
 				}
 			}
 
-			console.log(data);
+			//console.log(data);
 			CompanyData.push(data);
 		}).then(function() {
 			CompanyReturn["Hash"] = CompanyHash;
@@ -663,7 +662,7 @@ function getStockData(stockName, startDate, endDate)
 		finalData.push(push);
 		
 	}
-	console.log(finalData);
+	//console.log(finalData);
 	return finalData;
 	
 }

@@ -7,6 +7,17 @@
   color: white;
 }
 
+.options-stats {
+    text-align: center;
+    background: #5599EE;
+    border-radius: 10px;
+    
+    width: 550px;
+    
+    position: absolute;
+    left: 25px;
+}
+
 .title {
     padding: 1px 0px;
     text-align: center;
@@ -24,13 +35,6 @@
     width: 1900px;
     height: 982px;
 }
-/*
-.start-btn {
-    background-color: steelblue;
-    padding: 3px;
-    font: 20px san-serif;
-}
-*/
 
 .line {
     fill: none;
@@ -38,7 +42,6 @@
     stroke-width: 3;
 }
 
-.bar 
-{
+.bar {
     color: white;
 }

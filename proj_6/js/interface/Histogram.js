@@ -6,7 +6,7 @@ class GainsLossesHistogram
         this.width = 500;
         this.height = 300;
         
-        this.color = {red: "#AA0000", green: "#00AA00"};
+        this.color = {red: "#870007", green: "#32D332"};
         
         this.initialize();
     }
