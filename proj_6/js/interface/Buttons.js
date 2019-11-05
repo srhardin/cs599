@@ -83,7 +83,10 @@ function GetValidDates()
 
 function changeTaxes(opt)
 {
-    console.log(opt.options[opt.selectedIndex].innerHTML);
+    var percent = +(opt.options[opt.selectedIndex].innerHTML.slice(0, -1));
+
+    g_TaxPayment = percent * 0.01 * (g_EndMoney - g_StartMoney);
+    g_FinalProfit = g_EndMoney - g_TaxPayment;
 }
 
 function UpdateGraphs()
@@ -92,7 +95,6 @@ function UpdateGraphs()
     stkvlGraph.update(getStockData(g_SelectedStock, g_StartDate, g_EndDate));
     stkcntGraph.update(getOwnedData(g_SelectedStock));
     lgGraph.update(gains_losses);
-
 }
 
 function UpdateStockGraphs(selectedStock)
