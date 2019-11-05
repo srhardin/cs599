@@ -2,12 +2,12 @@ function StartSimulation()
 {
     // ensure valid dates
     GetValidDates();
-    g_StartMoney = document.getElementById('startMoney').value;
+    g_StartMoney = +document.getElementById('startMoney').value;
     
     var alg = document.getElementById('algorithm');
     var opt = alg.options[alg.selectedIndex].innerHTML;
     g_OwnedPerDay = [];
-    if(opt == "Reverse Mean")
+    if(opt == "Mean Reversion")
     {
         algorithm1();
     }
@@ -19,7 +19,7 @@ function StartSimulation()
     {
         algorithm3();
     }
-    else if (opt == "four")
+    else if (opt == "2nd Derivative")
     {
         algorithm4();
     }
@@ -68,7 +68,7 @@ function GetValidDates()
             }
         }
         
-        if(g_EndDate == undefined)
+        if(g_EndDate != DateHash[tempEnd] || g_EndDate == undefined)
         {
             if(checkDate < endDate)
             {
@@ -93,7 +93,7 @@ function UpdateGraphs()
 function UpdateStockGraphs(selectedStock)
 {
     stkvlGraph.update(getStockData(selectedStock, g_StartDate, g_EndDate));
-    stkcntGraph.update(getOwnedData(selectedStock));
+    stkcntGraph.update(getOwnedData());
 }
 
 const avGraph = new AccountValueGraph();

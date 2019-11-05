@@ -584,8 +584,6 @@ function getData()
 		{
 			DateHash[data[i]["Date"]] = i;
 		}
-		//console.log("done");
-		//console.log(DateHash);
 	});
 	
 	//This allows us to go through all of the keys in a given object. ezpz
@@ -595,8 +593,6 @@ function getData()
 			PromiseList.push(d3.csv("https://raw.githubusercontent.com/srhardin/cs599/master/proj_6/data/" + key + ".csv"));
 		}
 	}
-	//console.log(count);
-	//console.log(CompanyHash);
 	count = 0;
 	//This will resolve the promises in order once they are all finished
 	//This means they will be put in alphabetical order, since that is the order we called them in initially
@@ -621,7 +617,6 @@ function getData()
 					}
 					else if(data[i][DateHash[key]].Date != key)
 					{
-						//console.log(++count);
 						let temp = {};
 						temp["Date"] = key;
 						temp["Open"] = 0;
@@ -631,7 +626,6 @@ function getData()
 						temp["Adjusted_close"] = 0;
 						temp["Volume"] = 0;
 						data[i].splice(DateHash[key],0, temp);
-						//console.log(temp);
 					}
 				
 				}
@@ -662,17 +656,22 @@ function getStockData(stockName, startDate, endDate)
 		finalData.push(push);
 		
 	}
-	//console.log(finalData);
 	return finalData;
 	
 }
 
-function getOwnedData(stockName)
+function getOwnedData()
 {
 	let dataReturn = [];
 	for(let i = 0; i < g_OwnedPerDay.length; ++i)
 	{
-		dataReturn.push(g_OwnedPerDay[i][hash[stockName]]);
+        var totalStocks = 0;
+        for(let j = 0; j < g_OwnedPerDay[i].length; ++j)
+        {
+            totalStocks += g_OwnedPerDay[i][j];
+        }
+        
+		dataReturn.push(totalStocks);
 	}
 	return dataReturn;
 }

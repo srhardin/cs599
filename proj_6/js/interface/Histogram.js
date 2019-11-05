@@ -15,7 +15,7 @@ class GainsLossesHistogram
     {
         this.xScale = d3.scaleLinear()
             .domain([-5, 5])
-            .range([0, this.width-this.margin.right]);
+            .range([0, this.width]);
             
         this.yScale = d3.scaleLinear()
             .domain([0, 75])
@@ -26,7 +26,7 @@ class GainsLossesHistogram
         this.yAxis = d3.axisLeft(this.yScale);
         
         this.svg = d3.select("#gainsLosses").append("svg")
-            .attr("width", this.width + this.margin.left)
+            .attr("width", this.margin.right + this.width + this.margin.left)
             .attr("height", this.height + this.margin.top + this.margin.bottom)
             .append("g")
             .attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
@@ -34,28 +34,20 @@ class GainsLossesHistogram
         // add the x Axis
         this.svg.append("g")
             .attr("class", "x axis")
-            .attr("transform", "translate(0," + this.height + ")")
+            .attr("transform", "translate("+ this.margin.left/6 +"," + this.height + ")")
             .call(this.xAxis);
     
         // text label for the x axis
         this.svg.append("text")             
-            .attr("transform", "translate(" + (this.width/2) + " ," + (this.height + this.margin.bottom - 10) + ")")
+            .attr("transform", "translate(" + (this.width/2) + " ," + -1 * this.margin.top/3  + ")")
             .style("text-anchor", "middle")
             .text("Gain and Loss Percents");
     
         // add the y Axis
         this.svg.append("g")
+            .attr("transform", "translate("+ this.margin.left/6 +",0)")
             .attr("class", "y axis")
             .call(this.yAxis);
-            
-        // text label for the y axis
-        this.svg.append("text")
-            .attr("transform", "rotate(-90)")
-            .attr("y", 0 - this.margin.left)
-            .attr("x", 0 - (this.height / 2))
-            .attr("dy", "1em")
-            .style("text-anchor", "middle")
-            .text("Number in the Bucket"); 
     }
     
     update(data)
@@ -108,7 +100,7 @@ class GainsLossesHistogram
     
     xFunc(d)
     {
-        return this.xScale(d);
+        return this.xScale(d) + this.margin.left/6;
     }
 
     yFunc(d)

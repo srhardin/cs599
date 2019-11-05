@@ -13,7 +13,7 @@ class AccountValueGraph
     initialize()
     {
         // Set the ranges
-        this.xScale = d3.scaleLinear().domain([0, 100]).range([0, this.width-this.margin.left]);
+        this.xScale = d3.scaleLinear().domain([0, 100]).range([0, this.width-this.margin.left/2]);
         this.yScale = d3.scaleLinear().domain([0, 100000]).range([this.height, 0]);
         
         // Define the axes
@@ -46,11 +46,11 @@ class AccountValueGraph
             
         // text label for the y axis
         this.svg.append("text")
-            .attr("y", (this.height + this.margin.bottom/2))
+            .attr("y", (-this.margin.bottom/2))
             .attr("x", (this.width/2))
             .attr("dy", "1em")
             .style("text-anchor", "middle")
-            .text("Trading Day");
+            .text("Total Value");
     
         // Add the Y Axis
         this.svg.append("g")
@@ -59,13 +59,13 @@ class AccountValueGraph
             .call(this.yAxis);
             
         // text label for the y axis
-        this.svg.append("text")
-            .attr("transform", "rotate(-90)")
-            .attr("y", - this.margin.left)
-            .attr("x", - (this.height / 2))
-            .attr("dy", "1em")
-            .style("text-anchor", "middle")
-            .text("Account Value");
+        //this.svg.append("text")
+        //    .attr("transform", "rotate(-90)")
+        //    .attr("y", - this.margin.left)
+        //    .attr("x", - (this.height / 2))
+        //    .attr("dy", "1em")
+        //    .style("text-anchor", "middle")
+        //    .text("Account Value");
     }
 
     update(data)

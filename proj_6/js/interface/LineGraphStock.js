@@ -13,8 +13,8 @@ class StockValueGraph
     initialize()
     {
         // Set the ranges
-        this.xScale = d3.scaleLinear().domain([0, 100]).range([0, this.width-this.margin.left]);
-        this.yScale = d3.scaleLinear().domain([0, 100000]).range([this.height, 0]);
+        this.xScale = d3.scaleLinear().domain([0, 100]).range([0, this.width-this.margin.left/2]);
+        this.yScale = d3.scaleLinear().domain([0, 1000]).range([this.height, 0]);
         
         // Define the axes
         this.xAxis = d3.axisBottom(this.xScale);
@@ -41,31 +41,22 @@ class StockValueGraph
         // Add the X Axis
         this.svg.append("g")
             .attr("class", "x axis")
-            .attr("transform", "translate("+(this.margin.left)+"," + (this.height) + ")")
+            .attr("transform", "translate("+(this.margin.left/2)+"," + (this.height) + ")")
             .call(this.xAxis);
             
         // text label for the y axis
         this.svg.append("text")
-            .attr("y", (this.height + this.margin.bottom/2))
+            .attr("y", (-this.margin.top/2))
             .attr("x", (this.width/2))
             .attr("dy", "1em")
             .style("text-anchor", "middle")
-            .text("Trading Day");
+            .text("Selected Stock's Value");
     
         // Add the Y Axis
         this.svg.append("g")
             .attr("class", "y axis")
-            .attr("transform", "translate(" + (this.margin.left) + ","+(0)+")")
+            .attr("transform", "translate(" + (this.margin.left/2) + ","+(0)+")")
             .call(this.yAxis);
-            
-        // text label for the y axis
-        this.svg.append("text")
-            .attr("transform", "rotate(-90)")
-            .attr("y", - this.margin.left/2)
-            .attr("x", - (this.height / 2))
-            .attr("dy", "1em")
-            .style("text-anchor", "middle")
-            .text("Stock Value");
     }
 
     update(data)
@@ -93,7 +84,7 @@ class StockValueGraph
     
     xFunc()
     {
-        return this.xScale(this.idx++) + this.margin.left;
+        return this.xScale(this.idx++) + this.margin.left/2;
     }
 
     yFunc(d)
@@ -118,8 +109,8 @@ class StockOwnedGraph
     initialize()
     {
         // Set the ranges
-        this.xScale = d3.scaleLinear().domain([0, 100]).range([0, this.width-this.margin.left]);
-        this.yScale = d3.scaleLinear().domain([0, 100000]).range([this.height, 0]);
+        this.xScale = d3.scaleLinear().domain([0, 100]).range([0, this.width - this.margin.left/2]);
+        this.yScale = d3.scaleLinear().domain([0, 1000]).range([this.height, 0]);
         
         // Define the axes
         this.xAxis = d3.axisBottom(this.xScale);
@@ -146,31 +137,22 @@ class StockOwnedGraph
         // Add the X Axis
         this.svg.append("g")
             .attr("class", "x axis")
-            .attr("transform", "translate("+(this.margin.left)+"," + (this.height) + ")")
+            .attr("transform", "translate("+(this.margin.left/2)+"," + (this.height) + ")")
             .call(this.xAxis);
             
         // text label for the y axis
         this.svg.append("text")
-            .attr("y", (this.height + this.margin.bottom/2))
+            .attr("y", (-this.margin.top/2))
             .attr("x", (this.width/2))
             .attr("dy", "1em")
             .style("text-anchor", "middle")
-            .text("Trading Day");
+            .text("Number of Owned Stocks");
     
         // Add the Y Axis
         this.svg.append("g")
             .attr("class", "y axis")
-            .attr("transform", "translate(" + (this.margin.left) + ","+(0)+")")
+            .attr("transform", "translate(" + (this.margin.left/2) + ","+(0)+")")
             .call(this.yAxis);
-            
-        // text label for the y axis
-        this.svg.append("text")
-            .attr("transform", "rotate(-90)")
-            .attr("y", - this.margin.left/2)
-            .attr("x", - (this.height / 2))
-            .attr("dy", "1em")
-            .style("text-anchor", "middle")
-            .text("Stock Amount Owned");
     }
 
     update(data)
@@ -198,7 +180,7 @@ class StockOwnedGraph
     
     xFunc()
     {
-        return this.xScale(this.idx++) + this.margin.left;
+        return this.xScale(this.idx++) + this.margin.left/2;
     }
 
     yFunc(d)
