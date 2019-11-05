@@ -81,6 +81,11 @@ function GetValidDates()
     document.getElementById('endDay').innerHTML = g_EndDate;
 }
 
+function changeTaxes(opt)
+{
+    console.log(opt.options[opt.selectedIndex].innerHTML);
+}
+
 function UpdateGraphs()
 {
     avGraph.update(value_over_time);
