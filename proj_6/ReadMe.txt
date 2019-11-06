@@ -8,8 +8,8 @@ To run the simulation again, or after changing the settings, click "Run Simulati
 
 Other Notes:
 
-The drop down for the algorithms only has algorithms for "one" and "two" for Project6b. The others are placeholders.
-
-For "Stock Data For" this will update 2 of the graphs with the data for said stock selected. 
+For "Stock Data For" this will update the bottom right graph with the data for said stock selected. 
 
 These graphs are for the closed values of the stocks, as well as the amount of the stock we owned for the selected algorithm.
+
+We have zoom and tooltips for the top left graph.
