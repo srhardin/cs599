@@ -30,7 +30,7 @@ class GainsLossesHistogram
             .attr("height", this.height + this.margin.top + this.margin.bottom)
             .append("g")
             .attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
-            
+        
         // add the x Axis
         this.svg.append("g")
             .attr("class", "x axis")
@@ -38,7 +38,7 @@ class GainsLossesHistogram
             .call(this.xAxis);
     
         // text label for the x axis
-        this.svg.append("text")             
+        this.svg.append("text")
             .attr("transform", "translate(" + (this.width/2) + " ," + -1 * this.margin.top/3  + ")")
             .style("text-anchor", "middle")
             .text("Gain and Loss Percents");
@@ -77,7 +77,7 @@ class GainsLossesHistogram
             .attr("y", d => { return this.yFunc(d.length); })
             .attr("height", d => { return this.height - this.yFunc(d.length); })
             .style("fill", d => 
-            { 
+            {
                 if(d.x0 < 0.0) {
                     return this.color.red;
                 }
@@ -85,7 +85,7 @@ class GainsLossesHistogram
                     return this.color.green
                 }
             });
-            
+        
         // Select the section we want to apply our changes to
         var changes = d3.select("#gainsLosses").transition();
     

@@ -27,6 +27,7 @@ function StartSimulation()
     // Update the visuals
     UpdateGraphs();
     SetAllStats();
+    changeTaxes(document.getElementById('taxBracket'));
 }
 
 function GetValidDates()
@@ -87,6 +88,9 @@ function changeTaxes(opt)
 
     g_TaxPayment = percent * 0.01 * (g_EndMoney - g_StartMoney);
     g_FinalProfit = g_EndMoney - g_TaxPayment;
+    
+    document.getElementById('displayTax').innerHTML = "<b>Total Taxed: </b>"+ formatMoney(g_TaxPayment);
+    document.getElementById('taxProfit').innerHTML = "<b>Final Money: </b>"+ formatMoney(g_FinalProfit);
 }
 
 function UpdateGraphs()
