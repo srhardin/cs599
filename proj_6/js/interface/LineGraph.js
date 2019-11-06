@@ -38,15 +38,12 @@ class AccountValueGraph
 			d3.select(this)
 			.style("stroke","steel-blue")
 			.style("opacity", 0.5);
-			console.log("working");
 		}
 		
 		var mousemove = function(d)
 		{
 			
 			var x0 = d3.mouse(this)[0]
-			//console.log(x0);
-			console.log(d3.mouse(this)[0]);
 			
 			    //i = bisectDate(data, x0, 1),
                 //d0 = data[i - 1],
@@ -109,7 +106,6 @@ class AccountValueGraph
 			.call(d3.zoom().on("zoom", function () 
 				{
 					svg.attr("transform", d3.event.transform);
-					console.log("working");
 				})
 			)
             .append("g")
