@@ -36,7 +36,7 @@ class AccountValueGraph
 			.attr("x", (d3.mouse(this)[0]+70) + "px")
 			.attr("y", (d3.mouse(this)[1]+50) + "px")
 			d3.select(this)
-			.style("stroke","black")
+			.style("stroke","steel-blue")
 			.style("opacity", 0.5);
 			console.log("working");
 		}
@@ -67,13 +67,13 @@ class AccountValueGraph
 				
 			}
 			
-			let display = correctkey + ", day: "+tempdisplay;
+			let display = correctkey + ", day: "+tempdisplay + " AccountValue: $" + Math.floor(tempdata[x1 - date_hash[g_StartDate]]);
 				
 			tooltip
 				.html(display)
 				.style("left", (d3.mouse(this)[0] + 10) + "px")
 				.style("top", (d3.mouse(this)[1] + 50) + "px")
-				.style("width", 140 + "px")
+				.style("width", 300 + "px")
 				.style("position", "relative")
 				.style("z-index", "100");
 				
@@ -101,15 +101,21 @@ class AccountValueGraph
         this.valueline = d3.line()
             .x(d => { return this.xFunc(); })
             .y(d => { return this.yFunc(d); });
-        
         // Adds the svg canvas
-        this.svg = d3.select("#accountValue")
+        var svg = d3.select("#accountValue")
             .append("svg")
             .attr("width", this.width + this.margin.left + this.margin.right)
             .attr("height", this.height + this.margin.top + this.margin.bottom)
+			.call(d3.zoom().on("zoom", function () 
+				{
+					svg.attr("transform", d3.event.transform);
+					console.log("working");
+				})
+			)
             .append("g")
             .attr("transform", "translate(" + (this.margin.left) + "," + (this.margin.top) + ")");
-    
+			
+		this.svg = svg;
         // Add the valueline path.
         this.svg.append("path")
             .attr("class", "line")
