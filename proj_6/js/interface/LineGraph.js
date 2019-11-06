@@ -1,3 +1,4 @@
+var tempdata = [];
 class AccountValueGraph
 {
     constructor()
@@ -6,15 +7,91 @@ class AccountValueGraph
         this.width = 500;
         this.height = 300;
         this.idx = 0;
+		this.data = [];
         
         this.initialize();
     }
     
     initialize()
     {
-        // Set the ranges
+		// Set the ranges
         this.xScale = d3.scaleLinear().domain([0, 100]).range([0, this.width-this.margin.left/2]);
         this.yScale = d3.scaleLinear().domain([0, 100000]).range([this.height, 0]);
+		
+		var x = this.xScale;
+		var tooltip = d3.select("#accountValue")
+			.append("div")
+			.style("opacity", 0)
+			.attr("class", "tooltip")
+			.style("background-color","white")
+			.style("border","solid")
+			.style("border-width","2px")
+			.style("border-radius","2px")
+			.style("padding","2px");
+			
+		var mouseover = function(d)
+		{
+			tooltip
+			.style("opacity", 1)
+			.attr("x", (d3.mouse(this)[0]+70) + "px")
+			.attr("y", (d3.mouse(this)[1]+50) + "px")
+			d3.select(this)
+			.style("stroke","black")
+			.style("opacity", 0.5);
+			console.log("working");
+		}
+		
+		var mousemove = function(d)
+		{
+			
+			var x0 = d3.mouse(this)[0]
+			//console.log(x0);
+			console.log(d3.mouse(this)[0]);
+			
+			    //i = bisectDate(data, x0, 1),
+                //d0 = data[i - 1],
+                //d1 = data[i],
+				
+			var x1 = Math.floor(((x0 - 25) / 475) * tempdata.length);
+			let tempdisplay = x1;
+			x1 += date_hash[g_StartDate];
+			var correctkey;
+			
+			for(var key in date_hash) 
+			{
+				if(date_hash[key] == x1)
+				{
+					correctkey = key;
+					break;
+				}
+				
+			}
+			
+			let display = correctkey + ", day: "+tempdisplay;
+				
+			tooltip
+				.html(display)
+				.style("left", (d3.mouse(this)[0] + 10) + "px")
+				.style("top", (d3.mouse(this)[1] + 50) + "px")
+				.style("width", 140 + "px")
+				.style("position", "relative")
+				.style("z-index", "100");
+				
+			//console.log(x1);
+			//console.log(d0);
+			//console.log(d1);
+			//console.log(correctkey);
+		}
+		
+		var mouseout = function(d)
+		{
+			tooltip
+			.style("opacity", 0)
+			d3.select(this)
+			.style("stroke","#ffab00")
+			.style("opacity", 1.0);
+		}
+
         
         // Define the axes
         this.xAxis = d3.axisBottom(this.xScale);
@@ -36,7 +113,10 @@ class AccountValueGraph
         // Add the valueline path.
         this.svg.append("path")
             .attr("class", "line")
-            .attr("d", this.valueline({}));
+            .attr("d", this.valueline({}))
+			.on("mouseover", mouseover)
+			.on("mousemove", mousemove)
+			.on("mouseout", mouseout);
     
         // Add the X Axis
         this.svg.append("g")
@@ -57,6 +137,7 @@ class AccountValueGraph
             .attr("class", "y axis")
             .attr("transform", "translate(" + (this.margin.left/2) + ","+(0)+")")
             .call(this.yAxis);
+
             
         // text label for the y axis
         //this.svg.append("text")
@@ -70,6 +151,7 @@ class AccountValueGraph
 
     update(data)
     {
+		tempdata = data;
         this.idx = 0;
         
         // Scale the range of the data again 
