@@ -1,0 +1,47 @@
+.chart div {
+  font: 10px sans-serif;
+  background-color: steelblue;
+  text-align: right;
+  padding: 3px;
+  margin: 1px;
+  color: white;
+}
+
+.options-stats {
+    text-align: center;
+    background: #6099DD;
+    border-radius: 10px;
+    
+    width: 550px;
+    
+    position: absolute;
+    left: 25px;
+}
+
+.title {
+    padding: 1px 0px;
+    text-align: center;
+    margin: auto;
+    
+    border-radius: 5px;
+    
+    background: #6099DD;
+    width: 250px;
+    top: 10px;
+}
+
+.background {
+    background: darkgrey;
+    width: 1900px;
+    height: 982px;
+}
+
+.line {
+    fill: none;
+    stroke: #ffab00;
+    stroke-width: 3;
+}
+
+.bar {
+    color: white;
+}
