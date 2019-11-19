@@ -1,0 +1,142 @@
+#include <iostream>
+#include <set>
+#include "field.h"
+#include "analyzer.h"
+int main() try {
+	MSfieldPart1 f2("ms2");
+	
+	
+	
+	
+	
+	std::cout << f2 << std::endl;
+	
+	Analyzer a2(f2);
+	std::cout << ( ( a2.IsMine(0,1) ) ? "OK" : "Wrong" ) << std::endl;
+	std::cout << "--------------------------------------\n";
+	std::cout << ( ( a2.IsMine(2,1) ) ? "OK" : "Wrong" ) << std::endl;
+	std::cout << "--------------------------------------\n";
+	std::cout << ( ( a2.IsMine(4,1) ) ? "OK" : "Wrong" ) << std::endl;
+	std::cout << "--------------------------------------\n";
+	std::cout << ( ( a2.IsMine(6,1) ) ? "OK" : "Wrong" ) << std::endl;
+	std::cout << "--------------------------------------\n";
+	std::cout << ( ( a2.IsMine(8,1) ) ? "OK" : "Wrong" ) << std::endl;
+	std::cout << "--------------------------------------\n";
+	std::cout << ( ( a2.IsSafe(1,1) ) ? "OK" : "Wrong" ) << std::endl;
+	std::cout << "--------------------------------------\n";
+	std::cout << ( ( a2.IsSafe(3,1) ) ? "OK" : "Wrong" ) << std::endl;
+	std::cout << "--------------------------------------\n";
+	std::cout << ( ( a2.IsSafe(5,1) ) ? "OK" : "Wrong" ) << std::endl;
+	std::cout << "--------------------------------------\n";
+	std::cout << ( ( a2.IsSafe(7,1) ) ? "OK" : "Wrong" ) << std::endl;
+	std::cout << "--------------------------------------\n";
+	
+	std::cout << ( ( a2.IsSafe(0,1) ) ? "Wrong" : "OK" ) << std::endl;
+	std::cout << "--------------------------------------\n";
+	std::cout << ( ( a2.IsSafe(2,1) ) ? "Wrong" : "OK" ) << std::endl;
+	std::cout << "--------------------------------------\n";
+	std::cout << ( ( a2.IsSafe(4,1) ) ? "Wrong" : "OK" ) << std::endl;
+	std::cout << "--------------------------------------\n";
+	std::cout << ( ( a2.IsSafe(6,1) ) ? "Wrong" : "OK" ) << std::endl;
+	std::cout << "--------------------------------------\n";
+	std::cout << ( ( a2.IsSafe(8,1) ) ? "Wrong" : "OK" ) << std::endl;
+	std::cout << "--------------------------------------\n";
+	std::cout << ( ( a2.IsMine(1,1) ) ? "Wrong" : "OK" ) << std::endl;
+	std::cout << "--------------------------------------\n";
+	std::cout << ( ( a2.IsMine(3,1) ) ? "Wrong" : "OK" ) << std::endl;
+	std::cout << "--------------------------------------\n";
+	std::cout << ( ( a2.IsMine(5,1) ) ? "Wrong" : "OK" ) << std::endl;
+	std::cout << "--------------------------------------\n";
+	std::cout << ( ( a2.IsMine(7,1) ) ? "Wrong" : "OK" ) << std::endl;
+	std::cout << "--------------------------------------\n";
+	MSfieldPart1 f3("ms3");
+	
+	
+	
+	
+	
+	
+	std::cout << f3 << std::endl;
+	
+	Analyzer a3(f3);
+	std::cout << ( ( a3.IsMine(1,0) ) ? "OK" : "Wrong" ) << std::endl;
+	std::cout << "--------------------------------------\n";
+    std::cout << ( ( a3.IsMine(3,0) ) ? "OK" : "Wrong" ) << std::endl;
+	std::cout << "--------------------------------------\n";
+	std::cout << ( ( a3.IsMine(1,2) ) ? "OK" : "Wrong" ) << std::endl;
+	std::cout << "--------------------------------------\n";
+	std::cout << ( ( a3.IsMine(3,2) ) ? "OK" : "Wrong" ) << std::endl;
+	std::cout << "--------------------------------------\n";
+	std::cout << ( ( a3.IsSafe(0,0) ) ? "OK" : "Wrong" ) << std::endl;
+	std::cout << "--------------------------------------\n";
+	std::cout << ( ( a3.IsSafe(0,1) ) ? "OK" : "Wrong" ) << std::endl;
+	std::cout << "--------------------------------------\n";
+	std::cout << ( ( a3.IsSafe(0,2) ) ? "OK" : "Wrong" ) << std::endl;
+	std::cout << "--------------------------------------\n";
+	std::cout << ( ( a3.IsSafe(2,0) ) ? "OK" : "Wrong" ) << std::endl;
+	std::cout << "--------------------------------------\n";
+	std::cout << ( ( a3.IsSafe(2,2) ) ? "OK" : "Wrong" ) << std::endl;
+	std::cout << "--------------------------------------\n";
+	std::cout << ( ( a3.IsSafe(4,0) ) ? "OK" : "Wrong" ) << std::endl;
+	std::cout << "--------------------------------------\n";
+	std::cout << ( ( a3.IsSafe(4,1) ) ? "OK" : "Wrong" ) << std::endl;
+	std::cout << "--------------------------------------\n";
+	std::cout << ( ( a3.IsSafe(4,2) ) ? "OK" : "Wrong" ) << std::endl;
+	std::cout << "--------------------------------------\n";
+	std::cout << ( ( a3.IsSafe(1,0) ) ? "Wrong" : "OK" ) << std::endl;
+	std::cout << "--------------------------------------\n";
+	std::cout << ( ( a3.IsSafe(3,0) ) ? "Wrong" : "OK" ) << std::endl;
+	std::cout << "--------------------------------------\n";
+	std::cout << ( ( a3.IsSafe(1,2) ) ? "Wrong" : "OK" ) << std::endl;
+	std::cout << "--------------------------------------\n";
+	std::cout << ( ( a3.IsSafe(3,2) ) ? "Wrong" : "OK" ) << std::endl;
+	std::cout << "--------------------------------------\n";
+	std::cout << ( ( a3.IsMine(0,0) ) ? "Wrong" : "OK" ) << std::endl;
+	std::cout << "--------------------------------------\n";
+	std::cout << ( ( a3.IsMine(0,1) ) ? "Wrong" : "OK" ) << std::endl;
+	std::cout << "--------------------------------------\n";
+	std::cout << ( ( a3.IsMine(0,2) ) ? "Wrong" : "OK" ) << std::endl;
+	std::cout << "--------------------------------------\n";
+	std::cout << ( ( a3.IsMine(2,0) ) ? "Wrong" : "OK" ) << std::endl;
+	std::cout << "--------------------------------------\n";
+	std::cout << ( ( a3.IsMine(2,2) ) ? "Wrong" : "OK" ) << std::endl;
+	std::cout << "--------------------------------------\n";
+	std::cout << ( ( a3.IsMine(4,0) ) ? "Wrong" : "OK" ) << std::endl;
+	std::cout << "--------------------------------------\n";
+	std::cout << ( ( a3.IsMine(4,1) ) ? "Wrong" : "OK" ) << std::endl;
+	std::cout << "--------------------------------------\n";
+	std::cout << ( ( a3.IsMine(4,2) ) ? "Wrong" : "OK" ) << std::endl;
+	std::cout << "--------------------------------------\n";
+	MSfieldPart1 f5("ms5");
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	std::cout << f5 << std::endl;
+	
+	Analyzer a5(f5);
+    
+    std::cout << ( ( a5.IsMine(3,2) ) ? "Wrong" : "OK" ) << std::endl;
+    std::cout << ( ( a5.IsSafe(3,2) ) ? "Wrong" : "OK" ) << std::endl;
+    std::cout << "--------------------------------------\n";
+    
+    std::cout << ( ( a5.IsMine(3,3) ) ? "OK" : "Wrong" ) << std::endl;  
+    std::cout << ( ( a5.IsSafe(3,3) ) ? "Wrong" : "OK" ) << std::endl;
+    std::cout << "--------------------------------------\n";
+    
+    std::cout << ( ( a5.IsMine(3,4) ) ? "OK" : "Wrong" ) << std::endl;    
+    std::cout << ( ( a5.IsSafe(3,4) ) ? "Wrong" : "OK" ) << std::endl;
+    std::cout << "--------------------------------------\n";
+} catch ( MSexception& e) {
+	std::cerr << e.what() << std::endl;
+}
