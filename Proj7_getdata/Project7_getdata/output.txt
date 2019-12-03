@@ -1,114 +1,159 @@
-#include <iostream>
-#include <set>
-#include "field.h"
-#include "analyzer.h"
-int main() try {
-	MSfieldPart1 f2("ms2");
+#include "pch.h"
+#pragma comment(lib, "user32.lib")	
+#include <WinUser.h>
+#include <tchar.h>
+#include "System/Renderer.h"
+#include "../../Resources/resource.h"
+#define STYLE_FULL_SCREEN WS_POPUP
+#define STYLE_NOT_FULL WS_OVERLAPPEDWINDOW
+HICON icon;
+LRESULT CALLBACK Win32WindowEventHandler(HWND wnd_handle, UINT msg_type, WPARAM w_param, LPARAM l_param)
+{
+	C_Window* this_window = reinterpret_cast<C_Window*>(GetWindowLongPtr(wnd_handle, GWLP_USERDATA));
+	if (this_window == nullptr)
+	{
+		return DefWindowProc(wnd_handle, msg_type, w_param, l_param);
+	}
+	switch (msg_type)
+	{
+	case WM_CLOSE:
+		this_window->windowShouldRun = false;
+		return 0;
+	case WM_SIZE:
+		this_window->Resize(LOWORD(l_param), HIWORD(l_param));
+		return 0;
+	case WM_ACTIVATE:
+		switch (LOWORD(w_param))
+		{
+		case WA_ACTIVE:
+			
+			this_window->Activated = true;
+			ShowCursor(FALSE);
+			break;
+		case WA_CLICKACTIVE:
+			this_window->Activated = true;
+			ShowCursor(FALSE);
+			
+			break;
+		case WA_INACTIVE:
+			this_window->Activated = false;
+			ShowCursor(TRUE);
+			
+			break;
+		default:
+			break;
+		}
+	default:
+		break;
+	}
+	return DefWindowProc(wnd_handle, msg_type, w_param, l_param);
+}
+C_Window::C_Window(std::string window_name, bool full_screen, uint16_t _width, uint16_t _height) : Activated(false)
+{
+	width = _width;
+	height = _height;
+	if (full_screen)
+	{
+		width = GetSystemMetrics(SM_CXSCREEN);
+		height = GetSystemMetrics(SM_CYSCREEN);
+	}
+	windowShouldRun = true;
+	win32WindowClassInstance = GetModuleHandle(nullptr);
+	
+	WNDCLASSEX window_class{};
+	window_class.cbSize = sizeof(WNDCLASSEX);
+	window_class.style = CS_HREDRAW | CS_VREDRAW;
+	window_class.lpfnWndProc = Win32WindowEventHandler;
+	window_class.cbClsExtra = 0;
+	window_class.cbWndExtra = 0;
+	window_class.hInstance = win32WindowClassInstance;
+	window_class.hIcon = LoadIcon(win32WindowClassInstance, MAKEINTRESOURCE(IDI_ICON1));
+	window_class.hCursor = LoadCursor(NULL, IDC_ARROW);
+	window_class.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
+	window_class.lpszMenuName = NULL;
+	window_class.lpszClassName = window_name.c_str();
+	
+	window_class.hIconSm = LoadIcon(win32WindowClassInstance, MAKEINTRESOURCE(IDI_ICON1)); 
+	
+	if (!RegisterClassEx(&window_class))
+	{
+		
+	}
+	
+	
+	DWORD style = STYLE_NOT_FULL;
+	if (full_screen)
+	{
+		style = STYLE_FULL_SCREEN;
+	}
+	RECT window_rect = { 0,0,LONG(width),LONG(height) };
+	
+	win32Window = CreateWindowEx(
+		0,
+		window_name.c_str(),					
+		window_name.c_str(),					
+		style,									
+		CW_USEDEFAULT, CW_USEDEFAULT,			
+		window_rect.right - window_rect.left,	
+		window_rect.bottom - window_rect.top,	
+		NULL,									
+		NULL,									
+		win32WindowClassInstance,				
+		NULL									
+	);
+	if (!win32Window)
+	{
+		
+		debug_func::ReportErr("Window Creation ERROR!");
+	}
+	
+	
+	SetWindowLongPtr(win32Window, GWLP_USERDATA, (LONG_PTR)this);
+	
+	ShowWindow(win32Window, SW_SHOW);
+	SetForegroundWindow(win32Window);
+	SetFocus(win32Window);
+	
+}
+C_Window::~C_Window(){}
+void C_Window::releaseWindow()
+{
+}
+bool C_Window::ShouldRun()
+{
+	return windowShouldRun;
+}
+void C_Window::UpdateWindow()
+{
+	MSG message;
+	if (PeekMessage(&message, win32Window, 0, 0, PM_REMOVE))
+	{
+		TranslateMessage(&message);
+		DispatchMessage(&message);
+	}
+}
+void C_Window::ResetWindowSize(int _width, int _height, bool full_screen)
+{
+	if (full_screen)
+	{
+		float tmpwidth = GetSystemMetrics(SM_CXSCREEN);
+		float tmpheight = GetSystemMetrics(SM_CYSCREEN);
+		SetWindowLongPtr(win32Window, GWL_STYLE, STYLE_FULL_SCREEN);
+		SetWindowPos(win32Window, HWND_TOP, 0, 0, tmpwidth, tmpheight, SWP_SHOWWINDOW);
+		
+	}
+	else
+	{
+		float tmpwidth = _width;
+		float tmpheight = _height;
+		SetWindowLongPtr(win32Window, GWL_STYLE, STYLE_NOT_FULL);
+		SetWindowPos(win32Window, HWND_TOP, 100, 100, tmpwidth, tmpheight, SWP_SHOWWINDOW);
+	}
 	
 	
 	
 	
 	
-	std::cout << f2 << std::endl;
-	
-	Analyzer a2(f2);
-	std::cout << ( ( a2.IsMine(0,1) ) ? "OK" : "Wrong" ) << std::endl;
-	std::cout << "--------------------------------------\n";
-	std::cout << ( ( a2.IsMine(2,1) ) ? "OK" : "Wrong" ) << std::endl;
-	std::cout << "--------------------------------------\n";
-	std::cout << ( ( a2.IsMine(4,1) ) ? "OK" : "Wrong" ) << std::endl;
-	std::cout << "--------------------------------------\n";
-	std::cout << ( ( a2.IsMine(6,1) ) ? "OK" : "Wrong" ) << std::endl;
-	std::cout << "--------------------------------------\n";
-	std::cout << ( ( a2.IsMine(8,1) ) ? "OK" : "Wrong" ) << std::endl;
-	std::cout << "--------------------------------------\n";
-	std::cout << ( ( a2.IsSafe(1,1) ) ? "OK" : "Wrong" ) << std::endl;
-	std::cout << "--------------------------------------\n";
-	std::cout << ( ( a2.IsSafe(3,1) ) ? "OK" : "Wrong" ) << std::endl;
-	std::cout << "--------------------------------------\n";
-	std::cout << ( ( a2.IsSafe(5,1) ) ? "OK" : "Wrong" ) << std::endl;
-	std::cout << "--------------------------------------\n";
-	std::cout << ( ( a2.IsSafe(7,1) ) ? "OK" : "Wrong" ) << std::endl;
-	std::cout << "--------------------------------------\n";
-	
-	std::cout << ( ( a2.IsSafe(0,1) ) ? "Wrong" : "OK" ) << std::endl;
-	std::cout << "--------------------------------------\n";
-	std::cout << ( ( a2.IsSafe(2,1) ) ? "Wrong" : "OK" ) << std::endl;
-	std::cout << "--------------------------------------\n";
-	std::cout << ( ( a2.IsSafe(4,1) ) ? "Wrong" : "OK" ) << std::endl;
-	std::cout << "--------------------------------------\n";
-	std::cout << ( ( a2.IsSafe(6,1) ) ? "Wrong" : "OK" ) << std::endl;
-	std::cout << "--------------------------------------\n";
-	std::cout << ( ( a2.IsSafe(8,1) ) ? "Wrong" : "OK" ) << std::endl;
-	std::cout << "--------------------------------------\n";
-	std::cout << ( ( a2.IsMine(1,1) ) ? "Wrong" : "OK" ) << std::endl;
-	std::cout << "--------------------------------------\n";
-	std::cout << ( ( a2.IsMine(3,1) ) ? "Wrong" : "OK" ) << std::endl;
-	std::cout << "--------------------------------------\n";
-	std::cout << ( ( a2.IsMine(5,1) ) ? "Wrong" : "OK" ) << std::endl;
-	std::cout << "--------------------------------------\n";
-	std::cout << ( ( a2.IsMine(7,1) ) ? "Wrong" : "OK" ) << std::endl;
-	std::cout << "--------------------------------------\n";
-	MSfieldPart1 f3("ms3");
-	
-	
-	
-	
-	
-	
-	std::cout << f3 << std::endl;
-	
-	Analyzer a3(f3);
-	std::cout << ( ( a3.IsMine(1,0) ) ? "OK" : "Wrong" ) << std::endl;
-	std::cout << "--------------------------------------\n";
-    std::cout << ( ( a3.IsMine(3,0) ) ? "OK" : "Wrong" ) << std::endl;
-	std::cout << "--------------------------------------\n";
-	std::cout << ( ( a3.IsMine(1,2) ) ? "OK" : "Wrong" ) << std::endl;
-	std::cout << "--------------------------------------\n";
-	std::cout << ( ( a3.IsMine(3,2) ) ? "OK" : "Wrong" ) << std::endl;
-	std::cout << "--------------------------------------\n";
-	std::cout << ( ( a3.IsSafe(0,0) ) ? "OK" : "Wrong" ) << std::endl;
-	std::cout << "--------------------------------------\n";
-	std::cout << ( ( a3.IsSafe(0,1) ) ? "OK" : "Wrong" ) << std::endl;
-	std::cout << "--------------------------------------\n";
-	std::cout << ( ( a3.IsSafe(0,2) ) ? "OK" : "Wrong" ) << std::endl;
-	std::cout << "--------------------------------------\n";
-	std::cout << ( ( a3.IsSafe(2,0) ) ? "OK" : "Wrong" ) << std::endl;
-	std::cout << "--------------------------------------\n";
-	std::cout << ( ( a3.IsSafe(2,2) ) ? "OK" : "Wrong" ) << std::endl;
-	std::cout << "--------------------------------------\n";
-	std::cout << ( ( a3.IsSafe(4,0) ) ? "OK" : "Wrong" ) << std::endl;
-	std::cout << "--------------------------------------\n";
-	std::cout << ( ( a3.IsSafe(4,1) ) ? "OK" : "Wrong" ) << std::endl;
-	std::cout << "--------------------------------------\n";
-	std::cout << ( ( a3.IsSafe(4,2) ) ? "OK" : "Wrong" ) << std::endl;
-	std::cout << "--------------------------------------\n";
-	std::cout << ( ( a3.IsSafe(1,0) ) ? "Wrong" : "OK" ) << std::endl;
-	std::cout << "--------------------------------------\n";
-	std::cout << ( ( a3.IsSafe(3,0) ) ? "Wrong" : "OK" ) << std::endl;
-	std::cout << "--------------------------------------\n";
-	std::cout << ( ( a3.IsSafe(1,2) ) ? "Wrong" : "OK" ) << std::endl;
-	std::cout << "--------------------------------------\n";
-	std::cout << ( ( a3.IsSafe(3,2) ) ? "Wrong" : "OK" ) << std::endl;
-	std::cout << "--------------------------------------\n";
-	std::cout << ( ( a3.IsMine(0,0) ) ? "Wrong" : "OK" ) << std::endl;
-	std::cout << "--------------------------------------\n";
-	std::cout << ( ( a3.IsMine(0,1) ) ? "Wrong" : "OK" ) << std::endl;
-	std::cout << "--------------------------------------\n";
-	std::cout << ( ( a3.IsMine(0,2) ) ? "Wrong" : "OK" ) << std::endl;
-	std::cout << "--------------------------------------\n";
-	std::cout << ( ( a3.IsMine(2,0) ) ? "Wrong" : "OK" ) << std::endl;
-	std::cout << "--------------------------------------\n";
-	std::cout << ( ( a3.IsMine(2,2) ) ? "Wrong" : "OK" ) << std::endl;
-	std::cout << "--------------------------------------\n";
-	std::cout << ( ( a3.IsMine(4,0) ) ? "Wrong" : "OK" ) << std::endl;
-	std::cout << "--------------------------------------\n";
-	std::cout << ( ( a3.IsMine(4,1) ) ? "Wrong" : "OK" ) << std::endl;
-	std::cout << "--------------------------------------\n";
-	std::cout << ( ( a3.IsMine(4,2) ) ? "Wrong" : "OK" ) << std::endl;
-	std::cout << "--------------------------------------\n";
-	MSfieldPart1 f5("ms5");
-    
 	
 	
 	
@@ -122,21 +167,36 @@ int main() try {
 	
 	
 	
-	std::cout << f5 << std::endl;
 	
-	Analyzer a5(f5);
-    
-    std::cout << ( ( a5.IsMine(3,2) ) ? "Wrong" : "OK" ) << std::endl;
-    std::cout << ( ( a5.IsSafe(3,2) ) ? "Wrong" : "OK" ) << std::endl;
-    std::cout << "--------------------------------------\n";
-    
-    std::cout << ( ( a5.IsMine(3,3) ) ? "OK" : "Wrong" ) << std::endl;  
-    std::cout << ( ( a5.IsSafe(3,3) ) ? "Wrong" : "OK" ) << std::endl;
-    std::cout << "--------------------------------------\n";
-    
-    std::cout << ( ( a5.IsMine(3,4) ) ? "OK" : "Wrong" ) << std::endl;    
-    std::cout << ( ( a5.IsSafe(3,4) ) ? "Wrong" : "OK" ) << std::endl;
-    std::cout << "--------------------------------------\n";
-} catch ( MSexception& e) {
-	std::cerr << e.what() << std::endl;
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+}
+HWND C_Window::GetWin32Handle()
+{
+	return win32Window;
+}
+void C_Window::Resize(int w, int h)
+{
+	width = w;
+	height = h;
+	C_Renderer *_renderer = C_Renderer::globalRenderer;
+	if (_renderer != nullptr)
+	{
+		_renderer->Resize(width, height);
+	}
+	
+	
+	
+	
 }

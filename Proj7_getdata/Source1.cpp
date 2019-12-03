@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <ctime>
 #include <cstdlib>
@@ -6,7 +7,9 @@
 #include <fstream>
 #include <string>
 #include <iomanip>
+#include <filesystem>
 
+namespace fs = std::experimental::filesystem;
 using namespace std;
 
 vector<string> removeComments(vector<string>& source) {
@@ -259,13 +262,72 @@ void analyzeKeywords(vector<string> const& aInput, KeywordsResult& aResult) {
 	}
 }
 
-int main()
+void datafileheader()
 {
-	//read a file
+	ofstream datafile("data.txt");
+	if (datafile.is_open())
+	{
+		datafile << setw(30) << "fileName" << setw(30) << "code" << setw(30) << "comments" <<
+			setw(30) << "includes" <<
+			setw(30) << "defines" <<
+			setw(30) << "pragmas" <<
+			setw(30) << "define_conditionals" <<
+			setw(30) << "preprocess_conditionals" <<
+			setw(30) << "types" <<
+			setw(30) << "conditionals" <<
+			setw(30) << "loops" <<
+			setw(30) << "structures" <<
+			setw(30) << "members" <<
+			setw(30) << "namespaces" <<
+			setw(30) << "casts" <<
+			setw(30) << "memorys" <<
+			setw(30) << "exceptions" <<
+			setw(30) << "miscs" <<
+			setw(30) << "asms" <<
+			setw(30) << "gotos" <<
+			setw(30) << "mutables" <<
+			setw(30) << "unions" <<
+			"\n";
+		datafile.close();
+	}
+	else cout << "Unable to open file";
+
+	ofstream datafile_csv("data.csv");
+	if (datafile_csv.is_open())
+	{
+		datafile_csv << "fileName" << "," << "code" << "," << "comments" <<
+			"," << "includes" <<
+			"," << "defines" <<
+			"," << "pragmas" <<
+			"," << "define_conditionals" <<
+			"," << "preprocess_conditionals" <<
+			"," << "types" <<
+			"," << "conditionals" <<
+			"," << "loops" <<
+			"," << "structures" <<
+			"," << "members" <<
+			"," << "namespaces" <<
+			"," << "casts" <<
+			"," << "memorys" <<
+			"," << "exceptions" <<
+			"," << "miscs" <<
+			"," << "asms" <<
+			"," << "gotos" <<
+			"," << "mutables" <<
+			"," << "unions" <<
+			"\n";
+		datafile_csv.close();
+	}
+	else cout << "Unable to open file";
+
+}
+void parsefile(std::string inFileName)
+{
 	string line;
 	vector<string> source;
 	vector<string> destination;
-	string inFileName = "driver1.cpp";
+
+	//string inFileName = "driver1.cpp";
 	ifstream myfile(inFileName);
 	if (!myfile.is_open()) {
 		cerr << "Unable to open file datafile.txt";
@@ -290,91 +352,49 @@ int main()
 	KeywordsResult keywords_result;
 	analyzeKeywords(destination, keywords_result);
 
-	//write code to "out.txt"
-	ofstream outfile("output.txt");
-	if (outfile.is_open())
-	{
-		for(auto line:destination)
-			outfile << line<<"\n";
-		outfile.close();
-	}
-	else cout << "Unable to open file";
+	////write code to "out.txt"
+	//ofstream outfile("output.txt");
+	//if (outfile.is_open())
+	//{
+	//	for (auto line : destination)
+	//		outfile << line << "\n";
+	//	outfile.close();
+	//}
+	//else cout << "Unable to open output.txt";
 
 	//write statistic data to "data.txt"
-	ofstream datafile("data.txt");
+	ofstream datafile("data.txt", ios_base::app | ios_base::out);
 	if (datafile.is_open())
 	{
-		datafile <<setw(30)<<"fileName"<< setw(30) <<"code"<< setw(30) <<"comments"<<
-			setw(30) << "includes" << 
-			setw(30) << "defines" << 
-			setw(30) << "pragmas" << 
-			setw(30) << "define_conditionals" << 
-			setw(30) << "preprocess_conditionals" <<
-			setw(30) << "types" << 
-			setw(30) << "conditionals" << 
-			setw(30) << "loops" << 
-			setw(30) << "structures" << 
-			setw(30) << "members" << 
-			setw(30) << "namespaces" << 
-			setw(30) << "casts" << 
-			setw(30) << "memorys" << 
-			setw(30) << "exceptions" << 
-			setw(30) << "miscs" << 
-			setw(30) << "asms" << 
-			setw(30) << "gotos" << 
-			setw(30) << "mutables" << 
-			setw(30) << "unions" <<
-			"\n";
-		datafile << setw(30)<< inFileName << setw(30) << codeLines << setw(30) << commentsLines <<
-			setw(30) << preprocess_result.num_includes				<< 
-			setw(30) << preprocess_result.num_defines				<< 
-			setw(30) << preprocess_result.num_pragmas				<< 
-			setw(30) << preprocess_result.num_def_conditionals		<<
-			setw(30) << preprocess_result.num_conditionals			<<
-			setw(30) << keywords_result.type_num					<<
-			setw(30) << keywords_result.conditional_num				<<
-			setw(30) << keywords_result.loop_num					<<
-			setw(30) << keywords_result.structure_num				<<
-			setw(30) << keywords_result.member_num					<<
-			setw(30) << keywords_result.namespace_num				<<
-			setw(30) << keywords_result.cast_num					<<
-			setw(30) << keywords_result.memory_num					<<
-			setw(30) << keywords_result.exception_num				<<
-			setw(30) << keywords_result.misc_num					<<
-			setw(30) << keywords_result.asm_num						<<
-			setw(30) << keywords_result.goto_num					<<
-			setw(30) << keywords_result.mutable_num					<<
-			setw(30) << keywords_result.union_num					<<
+		datafile << setw(30) << inFileName << setw(30) << codeLines << setw(30) << commentsLines <<
+			setw(30) << preprocess_result.num_includes <<
+			setw(30) << preprocess_result.num_defines <<
+			setw(30) << preprocess_result.num_pragmas <<
+			setw(30) << preprocess_result.num_def_conditionals <<
+			setw(30) << preprocess_result.num_conditionals <<
+			setw(30) << keywords_result.type_num <<
+			setw(30) << keywords_result.conditional_num <<
+			setw(30) << keywords_result.loop_num <<
+			setw(30) << keywords_result.structure_num <<
+			setw(30) << keywords_result.member_num <<
+			setw(30) << keywords_result.namespace_num <<
+			setw(30) << keywords_result.cast_num <<
+			setw(30) << keywords_result.memory_num <<
+			setw(30) << keywords_result.exception_num <<
+			setw(30) << keywords_result.misc_num <<
+			setw(30) << keywords_result.asm_num <<
+			setw(30) << keywords_result.goto_num <<
+			setw(30) << keywords_result.mutable_num <<
+			setw(30) << keywords_result.union_num <<
 			"\n";
 		datafile.close();
 	}
 	else cout << "Unable to open file";
 
 	//write statistic data to "data.csv"
-	ofstream datafile_csv("data.csv");
+	ofstream datafile_csv("data.csv", ios_base::app | ios_base::out);
 	if (datafile_csv.is_open())
 	{
-		datafile_csv << "fileName" << "," << "code" << "," << "comments" <<
-			"," << "includes" <<
-			"," << "defines" <<
-			"," << "pragmas" <<
-			"," << "define_conditionals" << 
-			"," << "preprocess_conditionals" <<
-			"," << "types" << 
-			"," << "conditionals" << 
-			"," << "loops" << 
-			"," << "structures" << 
-			"," << "members" << 
-			"," << "namespaces" << 
-			"," << "casts" << 
-			"," << "memorys" << 
-			"," << "exceptions" << 
-			"," << "miscs" << 
-			"," << "asms" <<
-			"," << "gotos" << 
-			"," << "mutables" << 
-			"," << "unions" <<
-			"\n";
 		datafile_csv << inFileName << "," << codeLines << "," << commentsLines <<
 			"," << preprocess_result.num_includes <<
 			"," << preprocess_result.num_defines <<
@@ -396,9 +416,38 @@ int main()
 			"," << keywords_result.mutable_num <<
 			"," << keywords_result.union_num <<
 			"\n";
-			datafile_csv.close();
+		datafile_csv.close();
 	}
 	else cout << "Unable to open file";
+}
+
+int main()
+{
+	//read a file
+	string line;
+	vector<string> source;
+	vector<string> destination;
+
+	vector<string> inFileNames;
+	vector<string> sources;
+
+	std::string path = "./codebase";
+	for (const auto & entry : fs::recursive_directory_iterator(path))
+	{
+		std::cout << entry.path() << std::endl;
+		string t = entry.path().string();
+		inFileNames.push_back(t);
+	}
+
+	datafileheader();
+	for (auto inFileName : inFileNames)
+	{
+		if (inFileName.substr(inFileName.size() - 3) != "cpp")
+			continue;
+		parsefile(inFileName);
+	}
+
+	
 
 	return 0;
 }
