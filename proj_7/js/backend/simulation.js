@@ -1,1 +1,1 @@
-function StartSimulation(){    getData();}function UpdateGraphs(){    //plateletGraph.update();}const plateletGraph = new PlateletGraph();getData();
+function StartSimulation(){    getData();}const plateletGraph = new PlateletGraph();getData();

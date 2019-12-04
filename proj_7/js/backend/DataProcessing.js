@@ -38,13 +38,8 @@ d3.csv("https://raw.githubusercontent.com/srhardin/cs599/master/proj_7/data/data
         }
         
         console.log("Done loading data...");
-        UpdateGraphs();
-		
-				console.log(data);
-		
-		//something like this
-		
-		// set the dimensions and margins of the graph
+        
+        // set the dimensions and margins of the graph
 		var margin = {top: 20, right: 20, bottom: 120, left: 40},
 			width = 850 - margin.left - margin.right,
 			height = 575 - margin.top - margin.bottom;
@@ -55,18 +50,17 @@ d3.csv("https://raw.githubusercontent.com/srhardin/cs599/master/proj_7/data/data
 				.padding(0.1);
 		var y = d3.scaleLinear()
 				.range([height, 0]);
-				
+        
 		// append the svg object to the body of the page
 		// append a 'group' element to 'svg'
 		// moves the 'group' element to the top left margin
-		var svg = d3.select("#accountValue").append("svg")
+		var svg = d3.select("#histogram").append("svg")
 			.attr("width", width + margin.left + margin.right)
 			.attr("height", height + margin.top + margin.bottom)
 		.append("g")
 			.attr("transform", 
 				"translate(" + margin.left + "," + margin.top + ")");
-		
-		
+                
 		// Scale the range of the data in the domains
 		x.domain(data.map(function(d) { return d.fileName; }));
 		y.domain([0, d3.max(data, function(d) { return d.code; })]);
@@ -79,7 +73,43 @@ d3.csv("https://raw.githubusercontent.com/srhardin/cs599/master/proj_7/data/data
 			.attr("x", function(d) { return x(d.fileName); })
 			.attr("width", x.bandwidth())
 			.attr("y", function(d) { return y(d.code); })
-			.attr("height", function(d) { return height - y(d.code); });
+			.attr("height", function(d) { return height - y(d.code); })
+            .on("mouseover", function()
+            {
+                var current = this;
+                var others = svg.selectAll(".bar").filter(function(el) {
+                    return this != current
+                });
+                others.style('opacity', 0.6);
+            })
+            .on("mouseout", function()
+            {
+                var current = this;
+                var others = svg.selectAll(".bar").filter(function(el) {
+                    return this != current
+                });
+                others.style('opacity', 1.0);
+            })
+            .on("click", function(d)
+            {
+                var current = this;
+                svg.selectAll(".bar").filter(function(el) {
+                    if(this != current)
+                    {
+                        d3.select(this)
+                            .attr("fill", "black");
+                    }
+                });
+                
+                d3.select(this)
+                    .attr("fill", "lightblue");
+                    
+                d3.select("#plateletTitle")
+                    .style("text-align", "center")
+                    .html("<h3><u>" + d.fileName + "</u></h3>");
+                    
+                plateletGraph.update(d);
+            });
 		
 		// add the x Axis
 		svg.append("g")
