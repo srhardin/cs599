@@ -12,10 +12,6 @@
     <script src="js\d3\d3.min.js"></script>
     <script src="js\backend\DataProcessing.js"></script>
     <script src="js\interface\GlobalVars.js"></script>
-    <script src="js\simulation\algorithm1.js"></script>
-    <script src="js\simulation\algorithm2.js"></script>
-    <script src="js\simulation\algorithm3.js"></script>
-    <script src="js\simulation\algorithm4.js"></script>
     <script src="js\simulation\simulation.js"></script>
 	
 </head>
@@ -24,81 +20,13 @@
         <div class="title"><p><h1><u>Codebase Fingerprint</u></h1></p></div>
         
         <!--Graphs-->
-        <div class="graphContainer" style="margin: auto; position: relative; top: 50px;">
+        <div class="graphContainer" style="margin: auto; position: relative; top: 75px;">
             <div id="accountValue" class="graph" style="position: relative; top: 45px; left: 45px"></div>
             <script src="js\interface\LineGraph.js"></script>
             
-            <div id="gainsLosses" class="graph" style="position: relative; top: -610px; left: 950px"></div>
-            <script src="js\interface\Histogram.js"></script>
+            <div id="platelet" class="graph" style="position: relative; top: -610px; left: 950px"></div>
+            <script src="js\interface\Platelet.js"></script>
         </div>
-        <!--
-        <div class="graphContainer" style="position: absolute; top: 550px; left: 615px">
-            <div id="stockOwned" class="graph" style="position: absolute; top: 20px; left: 20px"></div>
-            
-            <div id="stockValue" class="graph" style="position: absolute; top: 20px; left: 650px"></div>
-            <script src="js\interface\LineGraphStock.js"></script>
-        </div>
-    
-        <div class="options-stats" style="top: 100px;">
-            <h1 style="text-align: center;"><u>Options</u></h1>
-            <div style="text-align: right; width: 48.5%; line-height: 1.32;"><b>
-                Start Date: <br>
-                End Date: <br>
-                Start Money: <br>
-                Algorithm: <br>
-                Selected Stock:
-            </b></div>
-            <div style="text-align: left; width: 50%; position: absolute; top: 77px; left: 275px;">
-                <input type="date" id="startDate" min="2009-01-01" value="2018-10-11" max="2019-10-11"> <small id="startDay"></small><br>
-                <input type="date" id="endDate" min="2009-01-01" value="2019-10-11" max="2019-10-11"> <small id="endDay"></small><br>
-                <input type="number" id="startMoney" min="1000" value="100000"> <br>
-                <select id="algorithm">
-                    <option>Mean Reversion</option>
-                    <option>Largest Loss</option>
-                    <option>Random</option>
-                    <option>2nd Derivative</option>
-                </select> <br>
-            </div>
-            <p><button class="start-btn" onclick="StartSimulation()">Run Simulation</button></p>
-        </div>
-        
-        <div class="options-stats" style="top: 400px;">
-        <h1><u>Statistics</u></h1>
-            <div style="text-align: right; width: 48.5%;"><b>
-                <p>End Money:    </p>
-                <p>Total Gain:   </p>
-                <p>Yearly Gain:  </p>
-                <p>Std Dev:      </p>
-                <p>S&P500 Gain:  </p>
-                <p>Max Drawdown: </p>
-                <p>Sharpe Ratio: </p>
-            </b></div>
-            <div style="text-align: left; width: 50%; position: absolute; top: 65px; left: 275px;">
-                <p id="endMoney"></p>
-                <p id="totalGain"></p>
-                <p id="yearlyGain"></p>
-                <p id="deviation"></p>
-                <p id="SnP500"></p>
-                <p id="maxDrawdown"></p>
-                <p id="sharpe"></p>
-            </div>
-        </div>
-        
-        <div class="options-stats" style="top: 775px;">
-            <h1><u>Taxes</u></h1>
-            <b>Tax Bracket: </b>
-            <select id="taxBracket" onChange="changeTaxes(this)">
-                <option>10%</option>
-                <option>12%</option>
-                <option>22%</option>
-                <option>24%</option>
-                <option>32%</option>
-                <option>35%</option>
-                <option>37%</option>
-            </select> <br>
-            <p id="displayTax"><b>Total Taxed: </b></p>
-            <p id="taxProfit"><b>Final Money: </b></p>
-        </div> -->
         
         <script src="js\interface\Buttons.js"></script>
         <script src="js\interface\Statistics.js"></script>
