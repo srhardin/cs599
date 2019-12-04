@@ -11,9 +11,7 @@
     <!-- Javascript -->
     <script src="js\d3\d3.min.js"></script>
     <script src="js\backend\DataProcessing.js"></script>
-    <script src="js\interface\GlobalVars.js"></script>
-    <script src="js\simulation\simulation.js"></script>
-	
+    <script src="js\backend\GlobalVars.js"></script>
 </head>
 
 <body style="background-color: white;">
@@ -21,14 +19,13 @@
         
         <!--Graphs-->
         <div class="graphContainer" style="margin: auto; position: relative; top: 75px;">
-            <div id="accountValue" class="graph" style="position: relative; top: 45px; left: 45px"></div>
+            <div id="histogram" class="graph" style="position: relative; top: 45px; left: 45px"></div>
             <script src="js\interface\LineGraph.js"></script>
             
             <div id="platelet" class="graph" style="position: relative; top: -610px; left: 950px"></div>
             <script src="js\interface\Platelet.js"></script>
         </div>
         
-        <script src="js\interface\Buttons.js"></script>
-        <script src="js\interface\Statistics.js"></script>
+        <script src="js\backend\simulation.js"></script>
 </body>
 </html>

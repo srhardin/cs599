@@ -25,7 +25,7 @@ class GainsLossesHistogram
         this.xAxis = d3.axisBottom(this.xScale).ticks(10);
         this.yAxis = d3.axisLeft(this.yScale);
         
-        this.svg = d3.select("#gainsLosses").append("svg")
+        this.svg = d3.select("#histogram").append("svg")
             .attr("width", this.margin.right + this.width + this.margin.left)
             .attr("height", this.height + this.margin.top + this.margin.bottom)
             .append("g")

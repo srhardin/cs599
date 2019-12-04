@@ -6,8 +6,7 @@ class PlateletGraph
         this.margin = {top: 50, right: 50, bottom: 50, left: 50};
         this.width = 350;
         this.height = 350;
-        this.idx = 0;
-		this.data = [];
+        this.data = [];
         
         this.initialize();
     }
@@ -90,7 +89,7 @@ class PlateletGraph
 
     update(data)
     {
-        this.idx = 0;
+        // TODO: Accumulate indices into the data
         
         // Scale the range of the data again 
         this.xScale.domain([0, data.length]);
