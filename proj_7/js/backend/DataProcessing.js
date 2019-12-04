@@ -35,8 +35,6 @@ function getData()
             data[i].gotos                   = +data[i].gotos;
             data[i].mutables                = +data[i].mutables;
             data[i].unions                  = +data[i].unions;
-            
-            console.log(data[i]);
         }
         
         console.log("Done loading data...");

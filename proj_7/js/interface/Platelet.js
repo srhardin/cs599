@@ -7,6 +7,7 @@ class PlateletGraph
         this.width = 350;
         this.height = 350;
         this.data = [];
+        this.tooltip = {};
         
         this.initialize();
     }
@@ -24,7 +25,7 @@ class PlateletGraph
             
         var radius = Math.min(this.width-150,this.height-150)/2;
         var color = d3.scaleOrdinal(d3.schemeCategory10);
-        var arc = d3.arc()  
+        var arc = d3.arc()
             .outerRadius(radius)
             .innerRadius(2)
             .cornerRadius(40);
